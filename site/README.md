@@ -25,6 +25,8 @@ Leave either value empty while the support provider or app download is undecided
 
 ## Vercel
 
-Import the repository into Vercel and set the project root directory to `site`.
+Import the repository into Vercel and keep the project root directory as the repository root.
 
-No build command is required. The output is plain static HTML, CSS, and JavaScript.
+No build command is required. The root `vercel.json` tells Vercel to serve the plain static website from `site/`.
+
+When a downloadable Mac app exists, set `downloadUrl` to `/api/download` and configure `CHEEPURU_DOWNLOAD_URL` in Vercel.
