@@ -10,13 +10,13 @@ python3 -m http.server 4173 -d site
 
 Open `http://127.0.0.1:4173/`.
 
-To tune screenshot crop boxes, open:
+To tune the live website screenshot boxes, open:
 
 ```text
-http://127.0.0.1:4173/boxes.html
+http://127.0.0.1:4173/?boxes=1
 ```
 
-Drag or resize the boxes on top of the source screenshot, then copy the printed coordinates.
+The boxes appear directly around the real homepage images. Drag the label to move a box, resize from any side or corner, then copy the printed values.
 
 ## Configure Links
 
