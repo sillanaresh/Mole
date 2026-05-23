@@ -32,14 +32,6 @@
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-scene" aria-hidden="true">
-        <div class="scene-grid"></div>
-        <div class="scan-beam"></div>
-        <div class="hero-shot">
-          <img src="./assets/app-dashboard.png" alt="" loading="eager">
-        </div>
-      </div>
-
       <div class="hero-content">
         <p class="eyebrow">Free macOS preview · direct download · local-first cleanup</p>
         <h1 id="hero-title">A careful Mac utility for local review and control.</h1>
@@ -54,6 +46,14 @@
           <div><dt>7</dt><dd>local tools</dd></div>
           <div><dt>100%</dt><dd>review before action</dd></div>
         </dl>
+      </div>
+
+      <div class="hero-scene" aria-hidden="true">
+        <div class="scene-grid"></div>
+        <div class="scan-beam"></div>
+        <div class="hero-shot" data-frame-target="hero">
+          <img src="./assets/app-dashboard.png" alt="" loading="eager">
+        </div>
       </div>
     </section>
 
@@ -85,7 +85,7 @@
         <h2 id="tour-title">All the useful Mole workflows, shaped for normal humans.</h2>
         <p class="section-copy">The app keeps the CLI's serious safety posture but turns it into a calmer interface: tabs for jobs, review sheets for risk, and a history you can actually read.</p>
       </div>
-      <div class="tour-shell">
+      <div class="tour-shell" data-frame-target="product">
         <img class="app-screenshot" src="./assets/app-dashboard.png" alt="Cheepuru Katta native macOS app dashboard showing local tools and review labels" loading="lazy">
       </div>
     </section>
