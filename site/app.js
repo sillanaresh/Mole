@@ -33,7 +33,7 @@ function syncLinks() {
   if (downloadLink) {
     downloadLink.href = DOWNLOAD_URL || "#support";
     if (!DOWNLOAD_URL) {
-      downloadLink.textContent = "Mac app coming soon";
+      downloadLink.textContent = "Download unavailable";
       downloadLink.addEventListener("click", (event) => {
         event.preventDefault();
         downloadNote?.animate(
@@ -46,7 +46,8 @@ function syncLinks() {
         );
       });
     } else if (downloadNote) {
-      downloadNote.textContent = "Downloads are free. Optional support never unlocks or blocks features.";
+      downloadLink.setAttribute("download", "Cheepuru-Katta-preview.zip");
+      downloadNote.textContent = "Preview build for macOS. It is unsigned, so macOS may ask you to right-click Open.";
     }
   }
 }

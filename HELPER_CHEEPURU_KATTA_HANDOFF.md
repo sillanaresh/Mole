@@ -166,7 +166,7 @@ The site is plain HTML/CSS/JS:
 Website sections already implemented:
 
 - Hero section.
-- Product/app mockup.
+- Native app screenshot section.
 - Scan -> Review -> Clean workflow section.
 - Capability grid.
 - Safety/privacy promises.
@@ -187,9 +187,8 @@ Capabilities represented on the website:
 
 Important limitation:
 
-- The current product mockups are visual website mockups.
-- They are not real SwiftUI app screenshots.
-- Once the native app exists, replace the mockups with actual app screenshots.
+- The website now includes a real dashboard screenshot.
+- Additional screenshots are still needed for Clean review, Status, Analyze, History, and Settings.
 
 ### 4.2 Brand Name Changed
 
@@ -270,22 +269,22 @@ Current config:
 ```js
 window.CHEEPURU_CONFIG = {
   supportUrl: "",
-  downloadUrl: ""
+  downloadUrl: "/downloads/Cheepuru-Katta-preview.zip"
 };
 ```
 
-Because no Mac app exists yet:
+Because the native preview app exists now:
 
-- The download button does not point to a fake file.
-- The button text changes to `Mac app coming soon`.
-- This prevents misleading users.
+- The download button points to `site/downloads/Cheepuru-Katta-preview.zip`.
+- The download note warns that the build is unsigned.
+- This is acceptable for early testing, but not ideal for public launch.
 
 When a real app exists, update config to:
 
 ```js
 window.CHEEPURU_CONFIG = {
   supportUrl: "https://your-support-page.example",
-  downloadUrl: "/api/download"
+  downloadUrl: "/downloads/Cheepuru-Katta-preview.zip"
 };
 ```
 
@@ -359,21 +358,59 @@ It describes the intended SwiftUI app direction:
 - History/receipts.
 - Optional support prompts.
 
+### 4.9 Native SwiftUI App Starter Added
+
+A native macOS app starter now exists in:
+
+```text
+app/CheepuruKatta/
+```
+
+Implemented:
+
+- Swift Package app target.
+- SwiftUI dashboard, sidebar, tool pages, review sheet, history, and settings.
+- Mole adapter discovery for bundled `Mole/mole`, repo `mole`, or installed `mo` / `mole`.
+- Dry-run review flow for Clean, Uninstall, Optimize, Purge, and Installer Cleanup.
+- Read-only JSON surfaces for Status and Analyze.
+- Local operation receipts in `~/Library/Application Support/Cheepuru Katta/history.json`.
+- Settings via `UserDefaults`.
+- Unsigned `.app` packaging script.
+- Developer ID signing and notarization scripts, ready once Apple credentials exist.
+- Swift tests for workflow command construction, output cleanup, history persistence, Mole discovery, and process execution.
+
+Useful commands:
+
+```bash
+make app-test
+make app-package
+make app-package-zip
+make app-notarize
+```
+
+`make app-package` creates:
+
+```text
+app/CheepuruKatta/.build/Cheepuru Katta.app
+app/CheepuruKatta/.build/Cheepuru Katta.zip
+```
+
+The app intentionally defaults to skipping privileged authorization prompts by passing `MOLE_TEST_NO_AUTH=1`, so the native UI does not hang on sudo prompts. A production privileged-helper design is still needed for full privileged cleanup.
+
 ## 5. What Is Not Done Yet
 
 The following are NOT done:
 
-- No actual Mac app has been built yet.
-- No SwiftUI project exists yet.
-- No real DMG/ZIP app download exists yet.
+- No signed/notarized public DMG/ZIP app download exists yet.
 - No Apple Developer ID signing exists yet.
 - No notarization exists yet.
 - No update system exists yet.
 - No real support/donation URL is configured yet.
 - No production download analytics dashboard exists yet.
-- No real app screenshots exist yet.
-- Website mockups are not real app UI screenshots.
-- Branch has not necessarily been merged into `main`.
+- A first real dashboard screenshot exists at `site/assets/app-dashboard.png`.
+- An unsigned preview ZIP exists at `site/downloads/Cheepuru-Katta-preview.zip`.
+- More screenshots are still needed for review, status, analyze, history, and settings.
+- No privileged helper exists for full sudo-backed native execution.
 
 ## 6. Immediate Next Tasks
 
@@ -442,56 +479,51 @@ Example:
 ```js
 window.CHEEPURU_CONFIG = {
   supportUrl: "https://buymeacoffee.com/your-page",
-  downloadUrl: ""
+  downloadUrl: "/downloads/Cheepuru-Katta-preview.zip"
 };
 ```
 
 No support provider has been finalized yet.
 
-### Task 4: Start Native Mac App
+### Task 4: Sign, Notarize, and Package the Native App
 
-Recommended direction:
+Current local path:
 
-- SwiftUI macOS app.
-- Native feel.
-- Beautiful but quiet utility UI.
-- Same brand/aesthetic as website.
-- Use actual app screenshots later on website.
+```text
+app/CheepuruKatta/.build/Cheepuru Katta.app
+```
 
-Do not start with Electron unless the user explicitly changes direction.
+Next release work:
 
-### Task 5: Build Mole Adapter Layer
+- Create a Developer ID certificate.
+- Add signing settings or a signing script.
+- Notarize the app bundle.
+- Wrap as DMG or ZIP.
+- Upload the archive.
+- Set `CHEEPURU_DOWNLOAD_URL` in Vercel.
+- Change `site/config.js` to `downloadUrl: "/api/download"`.
 
-The app should call Mole locally through an adapter.
+### Task 5: Build Production Privileged Helper
 
-Adapter responsibilities:
+The app currently calls Mole locally through an adapter and avoids sudo hangs by default.
 
-- Locate bundled Mole binary or repo CLI.
-- Run scan/preview commands.
-- Parse stable JSON output where available.
-- Avoid fragile parsing of terminal-formatted human output.
-- Route destructive actions through Mole safety helpers.
-- Return structured results to SwiftUI.
+Production still needs:
 
-### Task 6: Enforce Destructive-Action Safety
+- A proper privileged-helper strategy for full system cleanup.
+- Clear permission onboarding.
+- Tests that privileged paths cannot run without review.
 
-Every destructive workflow must follow:
+### Task 6: Capture More Real App Screenshots
 
-1. Preview/dry-run.
-2. Grouped review.
-3. Explicit confirmation.
-4. Execution.
-5. Local receipt/history.
+One privacy-safe dashboard screenshot is already wired into the website.
 
-The app must not allow direct deletion without preview/confirmation.
+Still needed after visual polish:
 
-### Task 7: Replace Website Mockups With Real Screenshots
+- Run the packaged app.
+- Capture Clean review, Status, Analyze, History, and Settings screenshots.
+- Replace any remaining website mockups with real screenshots.
 
-After the SwiftUI app exists:
-
-- Capture real app screenshots.
-- Replace website mockups with actual product screenshots.
-- Keep website and app aesthetics consistent.
+Keep website and app aesthetics consistent.
 
 ## 7. Native App Product Spec
 
@@ -606,10 +638,15 @@ site/styles.css
 site/app.js
 site/config.js
 site/icon.svg
+site/assets/app-dashboard.png
 vercel.json
 api/download.js
 VERCEL_DEPLOY.md
 site/app-blueprint.md
+app/CheepuruKatta/README.md
+app/CheepuruKatta/Package.swift
+app/CheepuruKatta/Sources/
+app/CheepuruKatta/Tests/
 README.md
 LICENSE
 ```
@@ -657,6 +694,14 @@ Validate download API syntax:
 
 ```bash
 node -c api/download.js
+```
+
+Build and test the native app:
+
+```bash
+make app-test
+make app-package
+make app-package-zip
 ```
 
 Run site locally:
@@ -733,5 +778,4 @@ Do not:
 
 ## 14. Current One-Line Status
 
-Cheepuru Katta currently has a Vercel-ready static marketing website, a fixed root Vercel deployment config, and a future download-tracking endpoint, but the native macOS app, real download package, support URL, app screenshots, signing, notarization, and production analytics dashboard are still pending.
-
+Cheepuru Katta currently has a Vercel-ready static marketing website, a native SwiftUI app starter with Mole adapter, review-first destructive workflows, local receipts, tests, and unsigned local packaging, but the public DMG/ZIP download, support URL, real screenshots, Developer ID signing, notarization, privileged helper, and production analytics dashboard are still pending.

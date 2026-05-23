@@ -1,6 +1,6 @@
 # Makefile for Mole
 
-.PHONY: all build clean check format test test-go verify release release-amd64 release-arm64 mod-download
+.PHONY: all build clean check format test test-go verify release release-amd64 release-arm64 mod-download app-build app-test app-package app-package-zip app-notarize
 
 # Output directory
 BIN_DIR := bin
@@ -55,6 +55,21 @@ test-go:
 	$(GO) test ./cmd/...
 
 verify: check test-go
+
+app-build:
+	cd app/CheepuruKatta && swift build
+
+app-test:
+	cd app/CheepuruKatta && swift test
+
+app-package:
+	app/CheepuruKatta/Scripts/package_app.sh
+
+app-package-zip:
+	app/CheepuruKatta/Scripts/package_app.sh --zip
+
+app-notarize:
+	app/CheepuruKatta/Scripts/notarize_app.sh
 
 # Release build targets (run on native architectures for CGO support)
 release-amd64: mod-download

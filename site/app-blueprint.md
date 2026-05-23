@@ -4,12 +4,16 @@
 
 Cheepuru Katta is free and local-first. The name means broom stick in Telugu, so the product should feel like a careful digital broom: useful, humble, and precise. Support is optional and never unlocks features.
 
+## Current Repo Status
+
+A SwiftUI starter app now lives in `app/CheepuruKatta`. It includes the Mole adapter, dry-run review flow, local receipts, settings, status JSON parsing, analyze JSON parsing, an unsigned `.app` packaging script, and a first real dashboard screenshot for the website.
+
 ## Recommended Stack
 
 - SwiftUI macOS app.
 - Bundled Mole CLI or local command adapter.
 - Local settings with `UserDefaults`.
-- Operation history as local JSON or SQLite.
+- Operation history as local JSON.
 - No license system.
 - Optional support link from shared config.
 
@@ -32,6 +36,8 @@ Every destructive workflow must follow this sequence:
 3. Explicit confirmation.
 4. Execution through Mole safety helpers.
 5. Local receipt/history entry.
+
+The current app implements this sequence for Clean, Uninstall, Optimize, Purge, and Installer Cleanup. Status and Analyze are read-only JSON surfaces.
 
 ## Support Prompt
 

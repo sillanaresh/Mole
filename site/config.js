@@ -1,4 +1,4 @@
 window.CHEEPURU_CONFIG = {
   supportUrl: "",
-  downloadUrl: ""
+  downloadUrl: "/downloads/Cheepuru-Katta-preview.zip"
 };

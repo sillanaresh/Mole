@@ -4,18 +4,22 @@ The website lives in `site/` and is plain static HTML, CSS, and JavaScript. Ther
 
 ## What Happens If Someone Clicks Download Today?
 
-Until `site/config.js` has a real `downloadUrl`, the hero button changes to **Mac app coming soon** and does not download anything.
+The website currently serves an unsigned preview ZIP from:
 
-When a signed/notarized app or early preview archive exists, set:
+```text
+/downloads/Cheepuru-Katta-preview.zip
+```
+
+The matching config is:
 
 ```js
 window.CHEEPURU_CONFIG = {
-  supportUrl: "https://your-support-page.example",
-  downloadUrl: "https://your-download-url.example/Cheepuru-Katta.dmg"
+  supportUrl: "",
+  downloadUrl: "/downloads/Cheepuru-Katta-preview.zip"
 };
 ```
 
-Then the button will link directly to that file.
+Because this build is not Developer ID signed or notarized, users may need to right-click Open or approve it in macOS Settings.
 
 ## Recommended Vercel Setup
 
@@ -59,8 +63,42 @@ The support URL is optional. Leave `supportUrl` empty until Buy Me a Coffee, Ko-
 
 ## Public Launch Checklist
 
-- Replace temporary website mockups with real Mac app screenshots.
-- Add a real `downloadUrl`.
+- Add more real Mac app screenshots beyond the first dashboard screenshot.
+- Replace the preview ZIP with a signed/notarized archive when available.
 - Add a real `supportUrl`, or hide the support CTA if not ready.
 - Confirm MIT attribution remains visible.
 - Test desktop and mobile layouts from the Vercel preview URL.
+
+## Native App Build Path
+
+The native app starter lives in `app/CheepuruKatta`.
+
+```bash
+make app-test
+make app-package
+make app-package-zip
+make app-notarize
+```
+
+`make app-package` creates an unsigned local app bundle at:
+
+```text
+app/CheepuruKatta/.build/Cheepuru Katta.app
+```
+
+`make app-package-zip` creates an unsigned tester archive at:
+
+```text
+app/CheepuruKatta/.build/Cheepuru Katta.zip
+```
+
+Do not wire the website Download button to this bundle until it is signed, notarized, uploaded, and `CHEEPURU_DOWNLOAD_URL` is configured.
+
+Signing and notarization require these environment variables:
+
+```text
+CHEEPURU_CODESIGN_IDENTITY=Developer ID Application: Your Name (TEAMID)
+APPLE_ID=you@example.com
+APPLE_TEAM_ID=TEAMID
+APPLE_APP_SPECIFIC_PASSWORD=xxxx-xxxx-xxxx-xxxx
+```

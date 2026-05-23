@@ -74,6 +74,9 @@ bin/status-go
 bin/analyze-darwin-*
 bin/status-darwin-*
 
+# Swift build artifacts
+app/CheepuruKatta/.build/
+
 # Test artifacts
 tests/tmp-*/
 tests/*.tmp
