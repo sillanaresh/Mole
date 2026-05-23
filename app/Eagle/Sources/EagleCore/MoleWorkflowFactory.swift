@@ -148,7 +148,7 @@ public struct MoleWorkflowFactory: Sendable {
             "LC_ALL": "C",
             "LANG": "C",
             "TERM": "dumb",
-            "MOLE_APP": "CheepuruKatta",
+            "MOLE_APP": "Eagle",
             "MOLE_DELETE_MODE": "trash",
             "NONINTERACTIVE": "1"
         ]

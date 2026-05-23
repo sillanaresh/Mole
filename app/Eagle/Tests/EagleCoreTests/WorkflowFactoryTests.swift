@@ -1,5 +1,5 @@
 import XCTest
-@testable import CheepuruKattaCore
+@testable import EagleCore
 
 final class WorkflowFactoryTests: XCTestCase {
     func testCleanPreviewUsesDryRunAndNoAuth() throws {

@@ -2,7 +2,7 @@ import Foundation
 
 public final class SettingsStore: @unchecked Sendable {
     private let defaults: UserDefaults
-    private let key = "CheepuruKatta.AppSettings.v1"
+    private let key = "Eagle.AppSettings.v1"
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
 

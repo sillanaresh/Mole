@@ -1,6 +1,6 @@
-# Cheepuru Katta macOS App
+# Eagle macOS App
 
-Cheepuru Katta is the native macOS layer for the Mole cleanup workflows. It keeps the product promise from the website:
+Eagle is the native macOS layer for the Mole cleanup workflows. It keeps the product promise from the website:
 
 - scan locally,
 - preview before destructive work,
@@ -21,15 +21,15 @@ make app-build
 Or directly:
 
 ```bash
-cd app/CheepuruKatta
+cd app/Eagle
 swift build
 ```
 
 ## Run During Development
 
 ```bash
-cd app/CheepuruKatta
-swift run CheepuruKatta
+cd app/Eagle
+swift run Eagle
 ```
 
 The adapter auto-detects the repository `mole` script, bundled `Mole/mole` resources in a packaged app, or installed `mo` / `mole` binaries in Homebrew paths.
@@ -49,7 +49,7 @@ make app-package
 This creates:
 
 ```text
-app/CheepuruKatta/.build/Cheepuru Katta.app
+app/Eagle/.build/Eagle.app
 ```
 
 For an unsigned tester archive:
@@ -61,7 +61,7 @@ make app-package-zip
 This creates:
 
 ```text
-app/CheepuruKatta/.build/Cheepuru Katta.zip
+app/Eagle/.build/Eagle.zip
 ```
 
 ## Sign And Notarize
@@ -69,13 +69,13 @@ app/CheepuruKatta/.build/Cheepuru Katta.zip
 For a Developer ID build:
 
 ```bash
-CHEEPURU_CODESIGN_IDENTITY="Developer ID Application: Your Name (TEAMID)" make app-package-zip
+EAGLE_CODESIGN_IDENTITY="Developer ID Application: Your Name (TEAMID)" make app-package-zip
 ```
 
 For notarization:
 
 ```bash
-export CHEEPURU_CODESIGN_IDENTITY="Developer ID Application: Your Name (TEAMID)"
+export EAGLE_CODESIGN_IDENTITY="Developer ID Application: Your Name (TEAMID)"
 export APPLE_ID="you@example.com"
 export APPLE_TEAM_ID="TEAMID"
 export APPLE_APP_SPECIFIC_PASSWORD="xxxx-xxxx-xxxx-xxxx"
@@ -85,7 +85,7 @@ make app-notarize
 For a local-only ad-hoc signature:
 
 ```bash
-CHEEPURU_AD_HOC_SIGN=1 make app-package-zip
+EAGLE_AD_HOC_SIGN=1 make app-package-zip
 ```
 
 The package script also builds the Go analyzer/status binaries and copies the Mole shell runtime into the app bundle under `Contents/Resources/Mole`.
@@ -95,7 +95,7 @@ For a public release, this unsigned bundle still needs:
 - Apple Developer ID signing,
 - notarization,
 - a DMG or ZIP upload target,
-- `CHEEPURU_DOWNLOAD_URL` configured in Vercel,
+- `EAGLE_DOWNLOAD_URL` configured in Vercel,
 - `site/config.js` changed to `downloadUrl: "/api/download"`.
 
 ## Safety Notes
@@ -108,4 +108,4 @@ Destructive workflows are locked behind:
 2. Review sheet.
 3. User confirmation toggle.
 4. Execution through Mole command flows.
-5. Local receipt in `~/Library/Application Support/Cheepuru Katta/history.json`.
+5. Local receipt in `~/Library/Application Support/Eagle/history.json`.

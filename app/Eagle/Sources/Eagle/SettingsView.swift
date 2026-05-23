@@ -1,4 +1,4 @@
-import CheepuruKattaCore
+import EagleCore
 import SwiftUI
 
 struct SettingsView: View {
@@ -73,7 +73,7 @@ struct SettingsView: View {
 
                 GroupBox("Attribution") {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Cheepuru Katta is a separate Mac app concept built around the MIT-licensed Mole CLI by Tw93 and contributors.")
+                        Text("Eagle is a separate Mac app concept built around the MIT-licensed Mole CLI by Tw93 and contributors.")
                         Text("The app preserves Mole attribution, keeps cleanup local, and routes destructive work through Mole command flows.")
                             .foregroundStyle(.secondary)
                     }

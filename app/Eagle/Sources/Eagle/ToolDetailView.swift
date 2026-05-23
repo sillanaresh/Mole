@@ -1,4 +1,4 @@
-import CheepuruKattaCore
+import EagleCore
 import SwiftUI
 
 struct ToolDetailView: View {

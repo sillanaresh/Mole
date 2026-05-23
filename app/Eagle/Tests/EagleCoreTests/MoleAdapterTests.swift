@@ -1,5 +1,5 @@
 import XCTest
-@testable import CheepuruKattaCore
+@testable import EagleCore
 
 final class MoleAdapterTests: XCTestCase {
     func testAdapterRunsExecutableAndCapturesOutput() async throws {
@@ -20,13 +20,13 @@ final class MoleAdapterTests: XCTestCase {
         let result = await adapter.run(
             MoleInvocation(
                 arguments: ["status", "--json"],
-                environment: ["MOLE_APP": "CheepuruKattaTest"],
+                environment: ["MOLE_APP": "EagleTest"],
                 timeoutSeconds: 5
             )
         )
 
         XCTAssertTrue(result.succeeded)
         XCTAssertTrue(result.stdout.contains("args:status --json"))
-        XCTAssertTrue(result.stdout.contains("env:CheepuruKattaTest"))
+        XCTAssertTrue(result.stdout.contains("env:EagleTest"))
     }
 }

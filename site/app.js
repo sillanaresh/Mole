@@ -1,8 +1,11 @@
-const DOWNLOAD_URL = window.CHEEPURU_CONFIG?.downloadUrl || "";
+const SITE_CONFIG = window.EAGLE_CONFIG || {};
+const DOWNLOAD_URL = SITE_CONFIG.downloadUrl || "";
+const SUPPORT_URL = SITE_CONFIG.supportUrl || "";
 
 const nav = document.querySelector("[data-nav]");
 const downloadLinks = document.querySelectorAll("[data-download-link]");
 const downloadNote = document.querySelector("[data-download-note]");
+const supportLinks = document.querySelectorAll("[data-support-link]");
 const root = document.documentElement;
 
 const boxConfigs = {
@@ -45,30 +48,26 @@ function syncLinks() {
         );
       });
     } else if (downloadNote) {
-      downloadLink.setAttribute("download", "Cheepuru-Katta-preview.zip");
-      downloadNote.textContent = "The download is live. This unsigned preview may require right-click Open the first time you launch it.";
+      downloadLink.setAttribute("download", "Eagle-preview.zip");
+      downloadNote.textContent = "Unsigned preview: no paid Apple Developer ID yet ($99/year). First launch: right-click Open, or after a block use System Settings > Privacy & Security > Open Anyway.";
     }
+  });
+}
+
+function syncSupportLinks() {
+  supportLinks.forEach((supportLink) => {
+    if (!SUPPORT_URL) {
+      supportLink.hidden = true;
+      return;
+    }
+
+    supportLink.href = SUPPORT_URL;
+    supportLink.hidden = false;
   });
 }
 
 function handleNavShadow() {
   nav?.classList.toggle("is-scrolled", window.scrollY > 8);
-}
-
-function revealOnScroll() {
-  const targets = document.querySelectorAll(".section, .tool-grid article, .principles article");
-  targets.forEach((target) => target.setAttribute("data-reveal", ""));
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  targets.forEach((target) => observer.observe(target));
 }
 
 function getCssPx(name) {
@@ -226,7 +225,7 @@ function setupBoxMode() {
 }
 
 syncLinks();
+syncSupportLinks();
 handleNavShadow();
-revealOnScroll();
 setupBoxMode();
 window.addEventListener("scroll", handleNavShadow, { passive: true });

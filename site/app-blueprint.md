@@ -1,12 +1,12 @@
-# Cheepuru Katta Mac App Blueprint
+# Eagle Mac App Blueprint
 
 ## Product Principle
 
-Cheepuru Katta is free and local-first. The name means broom stick in Telugu, so the product should feel like a careful digital broom: useful, humble, and precise. Support is optional and never unlocks features.
+Eagle is free and local-first. The product should feel sharp-eyed, careful, and precise: useful without being pushy. Support is optional and never unlocks features.
 
 ## Current Repo Status
 
-A SwiftUI starter app now lives in `app/CheepuruKatta`. It includes the Mole adapter, dry-run review flow, local receipts, settings, status JSON parsing, analyze JSON parsing, an unsigned `.app` packaging script, and a first real dashboard screenshot for the website.
+A SwiftUI starter app now lives in `app/Eagle`. It includes the Mole adapter, dry-run review flow, local receipts, settings, status JSON parsing, analyze JSON parsing, an unsigned `.app` packaging script, and a first real dashboard screenshot for the website.
 
 ## Recommended Stack
 

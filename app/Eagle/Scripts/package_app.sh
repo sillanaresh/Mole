@@ -5,9 +5,10 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 REPO_ROOT="$(cd "$PACKAGE_DIR/../.." && pwd)"
-APP_NAME="CheepuruKatta"
-DISPLAY_NAME="Cheepuru Katta"
+APP_NAME="Eagle"
+DISPLAY_NAME="Eagle"
 BUILD_DIR="$PACKAGE_DIR/.build"
+ICON_FILE="$PACKAGE_DIR/Resources/AppIcon.icns"
 APP_BUNDLE="$BUILD_DIR/$DISPLAY_NAME.app"
 CONTENTS_DIR="$APP_BUNDLE/Contents"
 MACOS_DIR="$CONTENTS_DIR/MacOS"
@@ -34,6 +35,9 @@ fi
 
 mkdir -p "$MACOS_DIR" "$MOLE_RESOURCES_DIR"
 cp "$BUILD_DIR/release/$APP_NAME" "$MACOS_DIR/$APP_NAME"
+if [[ -f "$ICON_FILE" ]]; then
+    cp "$ICON_FILE" "$RESOURCES_DIR/AppIcon.icns"
+fi
 
 cat > "$CONTENTS_DIR/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
@@ -43,11 +47,13 @@ cat > "$CONTENTS_DIR/Info.plist" <<PLIST
   <key>CFBundleExecutable</key>
   <string>$APP_NAME</string>
   <key>CFBundleIdentifier</key>
-  <string>com.cheepurukatta.mac</string>
+  <string>com.nareshsilla.eagle</string>
   <key>CFBundleName</key>
   <string>$DISPLAY_NAME</string>
   <key>CFBundleDisplayName</key>
   <string>$DISPLAY_NAME</string>
+  <key>CFBundleIconFile</key>
+  <string>AppIcon</string>
   <key>CFBundlePackageType</key>
   <string>APPL</string>
   <key>CFBundleShortVersionString</key>
@@ -70,10 +76,13 @@ rsync -a --delete \
     "$REPO_ROOT/LICENSE" \
     "$MOLE_RESOURCES_DIR/"
 
-if [[ -n "${CHEEPURU_CODESIGN_IDENTITY:-}" ]]; then
-    echo "Signing with $CHEEPURU_CODESIGN_IDENTITY..."
-    codesign --force --deep --options runtime --timestamp --sign "$CHEEPURU_CODESIGN_IDENTITY" "$APP_BUNDLE"
-elif [[ "${CHEEPURU_AD_HOC_SIGN:-0}" == "1" ]]; then
+CODE_SIGN_IDENTITY="${EAGLE_CODESIGN_IDENTITY:-}"
+AD_HOC_SIGN="${EAGLE_AD_HOC_SIGN:-0}"
+
+if [[ -n "$CODE_SIGN_IDENTITY" ]]; then
+    echo "Signing with $CODE_SIGN_IDENTITY..."
+    codesign --force --deep --options runtime --timestamp --sign "$CODE_SIGN_IDENTITY" "$APP_BUNDLE"
+elif [[ "$AD_HOC_SIGN" == "1" ]]; then
     echo "Applying ad-hoc signature..."
     codesign --force --deep --sign - "$APP_BUNDLE"
 fi

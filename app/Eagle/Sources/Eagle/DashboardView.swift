@@ -1,4 +1,4 @@
-import CheepuruKattaCore
+import EagleCore
 import SwiftUI
 
 struct DashboardView: View {
@@ -8,7 +8,7 @@ struct DashboardView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 HeaderBlock(
-                    title: "A careful broom for your Mac.",
+                    title: "A sharp-eyed utility for your Mac.",
                     subtitle: "Scan locally, review clearly, run only after confirmation, then keep a local receipt."
                 )
 
@@ -52,7 +52,7 @@ struct HeaderBlock: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Cheepuru Katta")
+            Text("Eagle")
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(.secondary)
             Text(title)

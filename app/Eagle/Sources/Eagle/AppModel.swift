@@ -1,4 +1,4 @@
-import CheepuruKattaCore
+import EagleCore
 import Foundation
 
 enum AppDestination: Hashable {

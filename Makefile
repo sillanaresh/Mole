@@ -57,19 +57,19 @@ test-go:
 verify: check test-go
 
 app-build:
-	cd app/CheepuruKatta && swift build
+	cd app/Eagle && swift build
 
 app-test:
-	cd app/CheepuruKatta && swift test
+	cd app/Eagle && swift test
 
 app-package:
-	app/CheepuruKatta/Scripts/package_app.sh
+	app/Eagle/Scripts/package_app.sh
 
 app-package-zip:
-	app/CheepuruKatta/Scripts/package_app.sh --zip
+	app/Eagle/Scripts/package_app.sh --zip
 
 app-notarize:
-	app/CheepuruKatta/Scripts/notarize_app.sh
+	app/Eagle/Scripts/notarize_app.sh
 
 # Release build targets (run on native architectures for CGO support)
 release-amd64: mod-download

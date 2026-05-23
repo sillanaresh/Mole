@@ -46,7 +46,7 @@ public final class HistoryStore: @unchecked Sendable {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("Library/Application Support")
         return base
-            .appendingPathComponent("Cheepuru Katta", isDirectory: true)
+            .appendingPathComponent("Eagle", isDirectory: true)
             .appendingPathComponent("history.json")
     }
 }

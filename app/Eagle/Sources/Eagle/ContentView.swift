@@ -1,4 +1,4 @@
-import CheepuruKattaCore
+import EagleCore
 import SwiftUI
 
 struct ContentView: View {
@@ -28,7 +28,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle("Cheepuru Katta")
+            .navigationTitle("Eagle")
             .navigationSplitViewColumnWidth(min: 250, ideal: 280, max: 320)
         } detail: {
             detailView

@@ -1,6 +1,6 @@
-# Cheepuru Katta Website Prototype
+# Eagle Website Prototype
 
-Static website for the free Cheepuru Katta Mac utility.
+Static website for the free Eagle Mac utility.
 
 ## Local Preview
 
@@ -25,13 +25,13 @@ The boxes appear directly around the real homepage images. Drag the label to mov
 Edit `config.js`:
 
 ```js
-window.CHEEPURU_CONFIG = {
-  supportUrl: "https://buymeacoffee.com/your-page",
-  downloadUrl: "/downloads/Cheepuru-Katta-preview.zip"
+window.EAGLE_CONFIG = {
+  supportUrl: "https://buymeachai.ezee.li/nareshsilla",
+  downloadUrl: "/downloads/Eagle-preview.zip"
 };
 ```
 
-Leave `supportUrl` empty while the support provider is undecided. The current `downloadUrl` points to the unsigned preview ZIP served by Vercel from `site/downloads/`.
+The current `supportUrl` points to Buy Me A Chai. The current `downloadUrl` points to the unsigned preview ZIP served by Vercel from `site/downloads/`.
 
 ## Vercel
 
@@ -39,4 +39,4 @@ Import the repository into Vercel and keep the project root directory as the rep
 
 No build command is required. The root `vercel.json` tells Vercel to serve the plain static website from `site/`.
 
-For download tracking, set `downloadUrl` to `/api/download` and configure `CHEEPURU_DOWNLOAD_URL` in Vercel after an external signed archive is hosted.
+For download tracking, set `downloadUrl` to `/api/download` and configure `EAGLE_DOWNLOAD_URL` in Vercel after an external signed archive is hosted.

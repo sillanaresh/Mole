@@ -1,4 +1,4 @@
-window.CHEEPURU_CONFIG = {
-  supportUrl: "",
-  downloadUrl: "/downloads/Cheepuru-Katta-preview.zip"
+window.EAGLE_CONFIG = {
+  supportUrl: "https://buymeachai.ezee.li/nareshsilla",
+  downloadUrl: "/downloads/Eagle-preview.zip"
 };

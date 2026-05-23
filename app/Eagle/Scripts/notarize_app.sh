@@ -5,8 +5,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 BUILD_DIR="$PACKAGE_DIR/.build"
-APP_BUNDLE="$BUILD_DIR/Cheepuru Katta.app"
-ZIP_PATH="$BUILD_DIR/Cheepuru Katta.zip"
+APP_BUNDLE="$BUILD_DIR/Eagle.app"
+ZIP_PATH="$BUILD_DIR/Eagle.zip"
 
 require_env() {
     local name="$1"
@@ -16,7 +16,7 @@ require_env() {
     fi
 }
 
-require_env CHEEPURU_CODESIGN_IDENTITY
+require_env EAGLE_CODESIGN_IDENTITY
 require_env APPLE_ID
 require_env APPLE_TEAM_ID
 require_env APPLE_APP_SPECIFIC_PASSWORD
