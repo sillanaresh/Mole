@@ -16,6 +16,8 @@ To tune the live website screenshot boxes, open:
 http://127.0.0.1:4173/?boxes=1
 ```
 
+The short form `http://127.0.0.1:4173/?box=1` works too.
+
 The boxes appear directly around the real homepage images. Drag the label to move a box, resize from any side or corner, then copy the printed values.
 
 ## Configure Links

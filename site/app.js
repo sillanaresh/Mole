@@ -89,7 +89,8 @@ function createHandle(direction) {
 
 function setupBoxMode() {
   const params = new URLSearchParams(window.location.search);
-  if (params.get("boxes") !== "1") return;
+  const boxModeRequested = params.get("box") === "1" || params.get("boxes") === "1";
+  if (!boxModeRequested) return;
 
   document.body.dataset.boxMode = "true";
 
