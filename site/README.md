@@ -31,7 +31,7 @@ window.EAGLE_CONFIG = {
 };
 ```
 
-The current `supportUrl` points to Buy Me A Chai. The current `downloadUrl` points to the unsigned preview ZIP served by Vercel from `site/downloads/`.
+The current `supportUrl` points to Buy Me A Chai. The current `downloadUrl` points to the ad-hoc signed preview ZIP served by Vercel from `site/downloads/`.
 
 ## Vercel
 

@@ -77,13 +77,13 @@ rsync -a --delete \
     "$MOLE_RESOURCES_DIR/"
 
 CODE_SIGN_IDENTITY="${EAGLE_CODESIGN_IDENTITY:-}"
-AD_HOC_SIGN="${EAGLE_AD_HOC_SIGN:-0}"
+AD_HOC_SIGN="${EAGLE_AD_HOC_SIGN:-1}"
 
 if [[ -n "$CODE_SIGN_IDENTITY" ]]; then
     echo "Signing with $CODE_SIGN_IDENTITY..."
     codesign --force --deep --options runtime --timestamp --sign "$CODE_SIGN_IDENTITY" "$APP_BUNDLE"
 elif [[ "$AD_HOC_SIGN" == "1" ]]; then
-    echo "Applying ad-hoc signature..."
+    echo "Applying ad-hoc bundle signature..."
     codesign --force --deep --sign - "$APP_BUNDLE"
 fi
 

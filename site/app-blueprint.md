@@ -6,7 +6,7 @@ Eagle is free and local-first. The product should feel sharp-eyed, careful, and 
 
 ## Current Repo Status
 
-A SwiftUI starter app now lives in `app/Eagle`. It includes the Mole adapter, dry-run review flow, local receipts, settings, status JSON parsing, analyze JSON parsing, an unsigned `.app` packaging script, and a first real dashboard screenshot for the website.
+A SwiftUI starter app now lives in `app/Eagle`. It includes the Mole adapter, dry-run review flow, local receipts, settings, status JSON parsing, analyze JSON parsing, an ad-hoc signed `.app` packaging script, and a first real dashboard screenshot for the website.
 
 ## Recommended Stack
 

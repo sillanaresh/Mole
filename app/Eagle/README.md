@@ -40,7 +40,7 @@ The adapter auto-detects the repository `mole` script, bundled `Mole/mole` resou
 make app-test
 ```
 
-## Package An Unsigned App
+## Package A Preview App
 
 ```bash
 make app-package
@@ -52,7 +52,7 @@ This creates:
 app/Eagle/.build/Eagle.app
 ```
 
-For an unsigned tester archive:
+For a tester archive:
 
 ```bash
 make app-package-zip
@@ -82,15 +82,15 @@ export APPLE_APP_SPECIFIC_PASSWORD="xxxx-xxxx-xxxx-xxxx"
 make app-notarize
 ```
 
-For a local-only ad-hoc signature:
+Preview packages are ad-hoc signed by default. To disable that local-only signature:
 
 ```bash
-EAGLE_AD_HOC_SIGN=1 make app-package-zip
+EAGLE_AD_HOC_SIGN=0 make app-package-zip
 ```
 
 The package script also builds the Go analyzer/status binaries and copies the Mole shell runtime into the app bundle under `Contents/Resources/Mole`.
 
-For a public release, this unsigned bundle still needs:
+For a public release, this ad-hoc signed bundle still needs:
 
 - Apple Developer ID signing,
 - notarization,

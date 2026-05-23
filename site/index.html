@@ -41,7 +41,7 @@
           <a class="button primary" href="/downloads/Eagle-preview.zip" download="Eagle-preview.zip" data-download-link>Download for Mac</a>
           <a class="chai-button" href="https://buymeachai.ezee.li/nareshsilla" target="_blank" rel="noopener noreferrer" data-support-link hidden><img src="https://buymeachai.ezee.li/assets/images/buymeachai-button.png" alt="Buy Me A Chai" width="200"></a>
         </div>
-        <p class="download-note" data-download-note>Unsigned preview: no paid Apple Developer ID yet ($99/year). First launch: right-click Open, or after a block use System Settings > Privacy & Security > Open Anyway.</p>
+        <p class="download-note" data-download-note>Not notarized yet, no paid Apple Developer ID. First launch: right-click Open. If macOS says damaged, run xattr -dr com.apple.quarantine /Applications/Eagle.app once.</p>
         <dl class="trust-stats" aria-label="Product highlights">
           <div><dt>0</dt><dd>forced payments</dd></div>
           <div><dt>7</dt><dd>local tools</dd></div>
@@ -132,6 +132,10 @@
         <details open>
           <summary>Is Eagle free?</summary>
           <p>Yes. The intended product model is free download with optional support. No license activation is required for v1.</p>
+        </details>
+        <details>
+          <summary>Why does macOS say Eagle is damaged?</summary>
+          <p>The preview is ad-hoc signed but not Apple-notarized because there is no paid Developer ID yet. Move Eagle.app to Applications, then run <code>xattr -dr com.apple.quarantine /Applications/Eagle.app</code> once and open it again.</p>
         </details>
         <details>
           <summary>Does it replace the Mole CLI?</summary>

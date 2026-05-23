@@ -49,7 +49,7 @@ function syncLinks() {
       });
     } else if (downloadNote) {
       downloadLink.setAttribute("download", "Eagle-preview.zip");
-      downloadNote.textContent = "Unsigned preview: no paid Apple Developer ID yet ($99/year). First launch: right-click Open, or after a block use System Settings > Privacy & Security > Open Anyway.";
+      downloadNote.textContent = "Not notarized yet, no paid Apple Developer ID. First launch: right-click Open. If macOS says damaged, run xattr -dr com.apple.quarantine /Applications/Eagle.app once.";
     }
   });
 }
