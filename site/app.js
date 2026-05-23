@@ -47,7 +47,7 @@ function syncLinks() {
       });
     } else if (downloadNote) {
       downloadLink.setAttribute("download", "Cheepuru-Katta-preview.zip");
-      downloadNote.textContent = "Preview build for macOS. It is unsigned, so macOS may ask you to right-click Open.";
+      downloadNote.textContent = "The download is live. This unsigned preview may require right-click Open the first time you launch it.";
     }
   }
 }

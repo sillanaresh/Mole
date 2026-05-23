@@ -401,7 +401,7 @@ The app intentionally defaults to skipping privileged authorization prompts by p
 
 The following are NOT done:
 
-- No signed/notarized public DMG/ZIP app download exists yet.
+- The public website serves an unsigned preview ZIP, but no signed/notarized DMG/ZIP exists yet.
 - No Apple Developer ID signing exists yet.
 - No notarization exists yet.
 - No update system exists yet.
@@ -778,4 +778,4 @@ Do not:
 
 ## 14. Current One-Line Status
 
-Cheepuru Katta currently has a Vercel-ready static marketing website, a native SwiftUI app starter with Mole adapter, review-first destructive workflows, local receipts, tests, and unsigned local packaging, but the public DMG/ZIP download, support URL, real screenshots, Developer ID signing, notarization, privileged helper, and production analytics dashboard are still pending.
+Cheepuru Katta currently has a Vercel-ready static marketing website, a native SwiftUI app starter with Mole adapter, review-first destructive workflows, local receipts, tests, an unsigned preview ZIP behind the Download button, and a real dashboard screenshot, but the support URL, signed/notarized build, Developer ID signing, notarization, privileged helper, more screenshots, and production analytics dashboard are still pending.

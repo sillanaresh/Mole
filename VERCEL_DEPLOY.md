@@ -38,7 +38,7 @@ After deployment, every commit pushed to the connected branch will trigger a new
 
 The repository includes `/api/download`, a Vercel serverless redirect endpoint for future app downloads.
 
-Set these Vercel environment variables when the Mac app archive exists:
+Set these Vercel environment variables when you want Vercel's download endpoint to redirect to an externally hosted signed DMG/ZIP:
 
 ```text
 CHEEPURU_DOWNLOAD_URL=https://your-file-host.example/Cheepuru-Katta.dmg
@@ -92,7 +92,7 @@ app/CheepuruKatta/.build/Cheepuru Katta.app
 app/CheepuruKatta/.build/Cheepuru Katta.zip
 ```
 
-Do not wire the website Download button to this bundle until it is signed, notarized, uploaded, and `CHEEPURU_DOWNLOAD_URL` is configured.
+The website Download button is already wired to the unsigned preview ZIP at `site/downloads/Cheepuru-Katta-preview.zip`. Replace that archive with a signed/notarized ZIP or switch `site/config.js` to `/api/download` when an external hosted build is ready.
 
 Signing and notarization require these environment variables:
 
