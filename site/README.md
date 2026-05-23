@@ -1,6 +1,6 @@
 # Cheepuru Katta Website Prototype
 
-Static website for the donation-first Cheepuru Katta Mac utility.
+Static website for the free Cheepuru Katta Mac utility.
 
 ## Local Preview
 
@@ -29,4 +29,4 @@ Import the repository into Vercel and keep the project root directory as the rep
 
 No build command is required. The root `vercel.json` tells Vercel to serve the plain static website from `site/`.
 
-For download tracking, later set `downloadUrl` to `/api/download` and configure `CHEEPURU_DOWNLOAD_URL` in Vercel.
+For download tracking, set `downloadUrl` to `/api/download` and configure `CHEEPURU_DOWNLOAD_URL` in Vercel after an external signed archive is hosted.

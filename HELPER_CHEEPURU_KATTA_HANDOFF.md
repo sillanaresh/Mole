@@ -166,12 +166,12 @@ The site is plain HTML/CSS/JS:
 Website sections already implemented:
 
 - Hero section.
-- Native app screenshot section.
+- Native app screenshot section using the same real dashboard asset as the hero.
 - Scan -> Review -> Clean workflow section.
 - Capability grid.
 - Safety/privacy promises.
 - Open-source Mole attribution.
-- Optional support/donation CTA.
+- Optional support/donation CTA is intentionally hidden until a real support URL exists.
 - FAQ.
 - Download CTA.
 
@@ -187,7 +187,7 @@ Capabilities represented on the website:
 
 Important limitation:
 
-- The website now includes a real dashboard screenshot.
+- The website now includes a real 2400 px dashboard screenshot in the hero and product surface sections.
 - Additional screenshots are still needed for Clean review, Status, Analyze, History, and Settings.
 
 ### 4.2 Brand Name Changed
@@ -407,7 +407,7 @@ The following are NOT done:
 - No update system exists yet.
 - No real support/donation URL is configured yet.
 - No production download analytics dashboard exists yet.
-- A first real dashboard screenshot exists at `site/assets/app-dashboard.png`.
+- A first real 2400 px dashboard screenshot exists at `site/assets/app-dashboard.png`.
 - An unsigned preview ZIP exists at `site/downloads/Cheepuru-Katta-preview.zip`.
 - More screenshots are still needed for review, status, analyze, history, and settings.
 - No privileged helper exists for full sudo-backed native execution.
@@ -515,13 +515,13 @@ Production still needs:
 
 ### Task 6: Capture More Real App Screenshots
 
-One privacy-safe dashboard screenshot is already wired into the website.
+One privacy-safe dashboard screenshot is already wired into the website hero and product surface.
 
 Still needed after visual polish:
 
 - Run the packaged app.
 - Capture Clean review, Status, Analyze, History, and Settings screenshots.
-- Replace any remaining website mockups with real screenshots.
+- Add additional real screenshots for deeper app states.
 
 Keep website and app aesthetics consistent.
 

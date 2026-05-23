@@ -23,12 +23,10 @@
     <nav class="nav-links" aria-label="Primary navigation">
       <a href="#tools">Tools</a>
       <a href="#safety">Safety</a>
-      <a href="#support">Support</a>
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav-actions">
-      <a class="text-link" href="https://github.com/tw93/mole" target="_blank" rel="noopener">Mole CLI</a>
-      <a class="button small" href="#download">Download</a>
+      <a class="button small" href="/downloads/Cheepuru-Katta-preview.zip" download="Cheepuru-Katta-preview.zip" data-download-link>Download</a>
     </div>
   </header>
 
@@ -37,49 +35,18 @@
       <div class="hero-scene" aria-hidden="true">
         <div class="scene-grid"></div>
         <div class="scan-beam"></div>
-        <div class="product-window hero-window">
-          <div class="window-chrome">
-            <span></span><span></span><span></span>
-            <strong>Safe Scan</strong>
-          </div>
-          <div class="window-body">
-            <div class="metric-stack">
-              <p>Ready to review</p>
-              <strong>18.6 GB</strong>
-              <span>Potential cleanup, grouped by risk</span>
-            </div>
-            <div class="review-list">
-              <div><span class="dot safe"></span><b>App caches</b><em>8.4 GB</em></div>
-              <div><span class="dot safe"></span><b>Developer builds</b><em>6.1 GB</em></div>
-              <div><span class="dot review"></span><b>Old installers</b><em>2.3 GB</em></div>
-              <div><span class="dot hold"></span><b>Protected data</b><em>Skipped</em></div>
-            </div>
-            <div class="receipt-strip">
-              <span>Local only</span>
-              <span>Preview first</span>
-              <span>Trash when recoverable</span>
-            </div>
-          </div>
-        </div>
-        <div class="mini-panel panel-a">
-          <span>System status</span>
-          <b>92</b>
-          <small>Healthy</small>
-        </div>
-        <div class="mini-panel panel-b">
-          <span>Last action</span>
-          <b>0 files</b>
-          <small>Nothing runs silently</small>
+        <div class="hero-shot">
+          <img src="./assets/app-dashboard.png" alt="" loading="eager">
         </div>
       </div>
 
       <div class="hero-content">
         <p class="eyebrow">Free macOS preview · direct download · local-first cleanup</p>
-        <h1 id="hero-title">A broom for the digital dust your Mac quietly gathers.</h1>
-        <p class="hero-copy">Cheepuru Katta means broom stick in Telugu. The native preview app scans locally, explains what it found, and asks before every destructive action, wrapping the open-source Mole CLI in a calmer Mac experience.</p>
+        <h1 id="hero-title">A careful Mac utility for local review and control.</h1>
+        <p class="hero-copy">Cheepuru Katta wraps the open-source Mole CLI in a native preview app. It scans locally, explains what it found, and asks before every destructive action.</p>
         <div class="hero-actions" id="download">
-          <a class="button primary" href="#" data-download-link>Download for Mac</a>
-          <a class="button secondary" href="#support" data-support-link>Support development</a>
+          <a class="button primary" href="/downloads/Cheepuru-Katta-preview.zip" download="Cheepuru-Katta-preview.zip" data-download-link>Download for Mac</a>
+          <a class="button secondary" href="#safety">Safety model</a>
         </div>
         <p class="download-note" data-download-note>The download is live. This unsigned preview may require right-click Open the first time you launch it.</p>
         <dl class="trust-stats" aria-label="Product highlights">
@@ -146,27 +113,13 @@
       <div class="safety-copy">
         <div class="section-kicker">Safety model</div>
         <h2 id="safety-title">The app is allowed to be useful. It is not allowed to be sneaky.</h2>
-        <p>Cheepuru Katta treats cleanup as a consent workflow, not a background ritual. The broom is gentle on purpose: your files matter more than a dramatic storage number.</p>
+        <p>Cheepuru Katta treats maintenance as a consent workflow, not a background ritual. Your files matter more than a dramatic storage number.</p>
       </div>
       <div class="principles">
         <article><span>01</span><h3>Nothing uploads</h3><p>Scans run locally. No file contents, names, browser history, documents, or cleanup lists are transmitted.</p></article>
         <article><span>02</span><h3>Preview before action</h3><p>Every destructive path goes through review and confirmation. No silent sweeps, no panic banners.</p></article>
         <article><span>03</span><h3>Refuse when unsure</h3><p>System roots, credentials, iCloud, keychains, messages, and protected app state are skipped by design.</p></article>
-        <article><span>04</span><h3>Receipts stay local</h3><p>Each operation records what changed, what failed, and what was protected so you can reason about it later.</p></article>
-      </div>
-    </section>
-
-    <section class="section support" id="support" aria-labelledby="support-title">
-      <div class="support-panel">
-        <div>
-          <div class="section-kicker">Optional support</div>
-          <h2 id="support-title">Free to use. Worth supporting if it earns its place.</h2>
-          <p>No license key, no account, no trial counter. The Mac preview downloads directly today. Optional creator support can be connected separately without changing the free app model.</p>
-        </div>
-        <div class="support-actions">
-          <a class="button primary" href="#" data-support-link>Buy the developer a coffee</a>
-          <span data-support-note>Add a creator support URL in config when the page is ready.</span>
-        </div>
+        <article><span>04</span><h3>Receipts stay local</h3><p>Each operation records what changed, what failed, and what was protected so you can reason about it afterward.</p></article>
       </div>
     </section>
 
@@ -195,10 +148,6 @@
           <summary>Will it run without Full Disk Access?</summary>
           <p>Yes, but deeper caches and app containers may be skipped. The app should explain what permission changes before asking for it.</p>
         </details>
-        <details>
-          <summary>Where does donation money go?</summary>
-          <p>Support is optional and separate from the app download. The button can point to Buy Me a Coffee, Ko-fi, GitHub Sponsors, Razorpay, or any creator support page once that URL is ready.</p>
-        </details>
       </div>
     </section>
   </main>
@@ -209,12 +158,11 @@
         <img class="brand-mark" src="./icon.svg" alt="" aria-hidden="true">
         <span>Cheepuru Katta</span>
       </a>
-      <p>Cheepuru Katta · A careful Mac utility with a broom in its hand and open-source cleanup logic underneath.</p>
+      <p>Cheepuru Katta · A careful Mac utility with open-source cleanup logic underneath.</p>
     </div>
     <div class="footer-links">
       <a href="#tools">Tools</a>
       <a href="#safety">Safety</a>
-      <a href="#support">Support</a>
       <a href="https://github.com/tw93/mole" target="_blank" rel="noopener">Mole CLI</a>
     </div>
   </footer>

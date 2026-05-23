@@ -63,9 +63,9 @@ The support URL is optional. Leave `supportUrl` empty until Buy Me a Coffee, Ko-
 
 ## Public Launch Checklist
 
-- Add more real Mac app screenshots beyond the first dashboard screenshot.
+- Add more real Mac app screenshots beyond the dashboard screenshot used in the hero and product surface.
 - Replace the preview ZIP with a signed/notarized archive when available.
-- Add a real `supportUrl`, or hide the support CTA if not ready.
+- Add a real `supportUrl` before restoring any visible support CTA.
 - Confirm MIT attribution remains visible.
 - Test desktop and mobile layouts from the Vercel preview URL.
 

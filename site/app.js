@@ -1,39 +1,14 @@
-const SUPPORT_URL = window.CHEEPURU_CONFIG?.supportUrl || "";
 const DOWNLOAD_URL = window.CHEEPURU_CONFIG?.downloadUrl || "";
 
 const nav = document.querySelector("[data-nav]");
-const supportLinks = document.querySelectorAll("[data-support-link]");
-const downloadLink = document.querySelector("[data-download-link]");
+const downloadLinks = document.querySelectorAll("[data-download-link]");
 const downloadNote = document.querySelector("[data-download-note]");
-const supportNote = document.querySelector("[data-support-note]");
 
 function syncLinks() {
-  supportLinks.forEach((link) => {
-    if (SUPPORT_URL) {
-      link.href = SUPPORT_URL;
-      link.target = "_blank";
-      link.rel = "noopener";
-    } else {
-      link.href = "#support";
-      link.addEventListener("click", (event) => {
-        event.preventDefault();
-        supportNote?.animate(
-          [
-            { transform: "translateX(0)" },
-            { transform: "translateX(4px)" },
-            { transform: "translateX(-4px)" },
-            { transform: "translateX(0)" }
-          ],
-          { duration: 280 }
-        );
-      });
-    }
-  });
-
-  if (downloadLink) {
-    downloadLink.href = DOWNLOAD_URL || "#support";
+  downloadLinks.forEach((downloadLink) => {
+    downloadLink.href = DOWNLOAD_URL || "#download";
     if (!DOWNLOAD_URL) {
-      downloadLink.textContent = "Download unavailable";
+      downloadLink.textContent = "Download for Mac";
       downloadLink.addEventListener("click", (event) => {
         event.preventDefault();
         downloadNote?.animate(
@@ -49,7 +24,7 @@ function syncLinks() {
       downloadLink.setAttribute("download", "Cheepuru-Katta-preview.zip");
       downloadNote.textContent = "The download is live. This unsigned preview may require right-click Open the first time you launch it.";
     }
-  }
+  });
 }
 
 function handleNavShadow() {
