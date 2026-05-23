@@ -6,12 +6,15 @@ struct GuidedReviewSheet: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
+        let isRunning = model.guidedPlan?.state == .running
+        let isFinished = model.guidedPlan?.state == .finished
+
         VStack(alignment: .leading, spacing: 18) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Review simple cleanup")
+                    Text(isFinished ? "Cleanup receipt" : "Review simple cleanup")
                         .font(.title2.weight(.semibold))
-                    Text("Suggested items are checked. Optional areas stay unchecked until you choose them.")
+                    Text(headerSubtitle(isRunning: isRunning, isFinished: isFinished))
                         .foregroundStyle(.secondary)
                 }
                 Spacer()
@@ -20,14 +23,23 @@ struct GuidedReviewSheet: View {
                     model.guidedAccepted = false
                     dismiss()
                 } label: {
-                    Label("Cancel", systemImage: "xmark")
+                    Label(isFinished ? "Done" : "Cancel", systemImage: "xmark")
                 }
+                .disabled(isRunning)
             }
 
             if let plan = model.guidedPlan {
+                if isRunning {
+                    RunningBanner(tool: model.guidedRunningTool)
+                } else if isFinished {
+                    ReceiptBanner(plan: plan)
+                }
+
                 List(plan.items) { item in
                     GuidedReviewRow(
                         item: item,
+                        isRunning: isRunning,
+                        isFinished: isFinished,
                         isSelected: Binding(
                             get: { model.guidedSelectedTools.contains(item.tool) },
                             set: { selected in
@@ -42,10 +54,13 @@ struct GuidedReviewSheet: View {
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 8))
 
-                Toggle("I reviewed the plan and want Eagle to run the selected cleanup actions.", isOn: $model.guidedAccepted)
+                if !isFinished {
+                    Toggle("I reviewed the plan and want Eagle to run the selected cleanup actions.", isOn: $model.guidedAccepted)
+                        .disabled(isRunning)
+                }
 
                 HStack {
-                    Text("\(model.guidedSelectedItems.count) actions selected")
+                    Text(summaryText(isFinished: isFinished, plan: plan))
                         .foregroundStyle(.secondary)
                     Spacer()
                     Button(role: .cancel) {
@@ -53,15 +68,26 @@ struct GuidedReviewSheet: View {
                         model.guidedAccepted = false
                         dismiss()
                     } label: {
-                        Text("Not Now")
+                        Text(isFinished ? "Done" : "Not Now")
                     }
-                    Button {
-                        Task { await model.executeGuidedCleanup() }
-                    } label: {
-                        Label("Run Selected Cleanup", systemImage: "checkmark.shield")
+                    .disabled(isRunning)
+                    if !isFinished {
+                        Button {
+                            Task { await model.executeGuidedCleanup() }
+                        } label: {
+                            if isRunning {
+                                HStack(spacing: 8) {
+                                    ProgressView()
+                                        .controlSize(.small)
+                                    Text("Running Cleanup")
+                                }
+                            } else {
+                                Label("Run Selected Cleanup", systemImage: "checkmark.shield")
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .disabled(!model.canRunGuidedCleanup || isRunning)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(!model.canRunGuidedCleanup)
                 }
 
                 RawOutputDisclosure(text: model.commandOutput)
@@ -77,17 +103,36 @@ struct GuidedReviewSheet: View {
         }
         .padding(24)
     }
+
+    private func headerSubtitle(isRunning: Bool, isFinished: Bool) -> String {
+        if isRunning {
+            return "Eagle is running the actions you selected. Keep this window open until the receipt appears."
+        }
+        if isFinished {
+            return "These are the cleanup actions Eagle completed. The full technical log is saved below."
+        }
+        return "Suggested items are checked. Optional areas stay unchecked until you choose them."
+    }
+
+    private func summaryText(isFinished: Bool, plan: GuidedCleanupPlan) -> String {
+        if isFinished {
+            return "\(plan.completedTools.count) actions completed"
+        }
+        return "\(model.guidedSelectedItems.count) actions selected"
+    }
 }
 
 private struct GuidedReviewRow: View {
     let item: GuidedCleanupItem
+    let isRunning: Bool
+    let isFinished: Bool
     @Binding var isSelected: Bool
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             Toggle("", isOn: $isSelected)
                 .labelsHidden()
-                .disabled(!item.previewSucceeded)
+                .disabled(!item.previewSucceeded || isRunning || isFinished)
 
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
@@ -96,7 +141,7 @@ private struct GuidedReviewRow: View {
                     Spacer()
                     Text(item.statusText)
                         .font(.caption.weight(.semibold))
-                        .foregroundStyle(item.previewSucceeded ? Color.secondary : Color.orange)
+                        .foregroundStyle(statusColor)
                 }
 
                 Text(item.summary)
@@ -104,12 +149,62 @@ private struct GuidedReviewRow: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                 if !item.previewSucceeded {
-                    Text("This action was left off because its preview did not complete cleanly.")
+                    Text(item.previewIssueText ?? "This action was left off because its preview did not complete cleanly.")
                         .font(.footnote)
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(item.previewFoundNothing ? Color.secondary : Color.orange)
                 }
             }
         }
         .padding(.vertical, 8)
+    }
+
+    private var statusColor: Color {
+        if item.previewSucceeded {
+            return .secondary
+        }
+        return item.previewFoundNothing ? .secondary : .orange
+    }
+}
+
+private struct RunningBanner: View {
+    let tool: MoleTool?
+
+    var body: some View {
+        HStack(spacing: 12) {
+            ProgressView()
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Cleanup is running")
+                    .font(.headline)
+                Text(tool.map { "Now running \($0.title)." } ?? "Preparing the selected actions.")
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
+        }
+        .padding(14)
+        .background(Color.accentColor.opacity(0.12))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+}
+
+private struct ReceiptBanner: View {
+    let plan: GuidedCleanupPlan
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Cleanup finished", systemImage: "checkmark.circle.fill")
+                .font(.headline)
+                .foregroundStyle(.green)
+            if plan.completedTools.isEmpty {
+                Text("No selected cleanup action completed. Open raw command output for details.")
+                    .foregroundStyle(.secondary)
+            } else {
+                Text("Completed: \(plan.completedTools.map(\.title).joined(separator: ", "))")
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(14)
+        .background(Color.green.opacity(0.12))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }

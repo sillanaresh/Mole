@@ -9,6 +9,7 @@ APP_NAME="Eagle"
 DISPLAY_NAME="Eagle"
 BUILD_DIR="$PACKAGE_DIR/.build"
 ICON_FILE="$PACKAGE_DIR/Resources/AppIcon.icns"
+ICON_PNG="$PACKAGE_DIR/Sources/Eagle/Resources/EagleIcon.png"
 APP_BUNDLE="$BUILD_DIR/$DISPLAY_NAME.app"
 CONTENTS_DIR="$APP_BUNDLE/Contents"
 MACOS_DIR="$CONTENTS_DIR/MacOS"
@@ -37,6 +38,9 @@ mkdir -p "$MACOS_DIR" "$MOLE_RESOURCES_DIR"
 cp "$BUILD_DIR/release/$APP_NAME" "$MACOS_DIR/$APP_NAME"
 if [[ -f "$ICON_FILE" ]]; then
     cp "$ICON_FILE" "$RESOURCES_DIR/AppIcon.icns"
+fi
+if [[ -f "$ICON_PNG" ]]; then
+    cp "$ICON_PNG" "$RESOURCES_DIR/EagleIcon.png"
 fi
 
 cat > "$CONTENTS_DIR/Info.plist" <<PLIST

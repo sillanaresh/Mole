@@ -86,12 +86,15 @@ final class AppModelWorkflowTests: XCTestCase {
 
         model.guidedSelectedTools.insert(.installer)
         model.guidedAccepted = true
+        model.guidedReviewPresented = true
         XCTAssertTrue(model.canRunGuidedCleanup)
 
         await model.executeGuidedCleanup()
 
         XCTAssertEqual(model.guidedPlan?.state, .finished)
         XCTAssertEqual(model.guidedPlan?.completedTools, [.clean, .optimize, .installer])
+        XCTAssertNil(model.guidedRunningTool)
+        XCTAssertTrue(model.guidedReviewPresented)
         XCTAssertEqual(model.history.map(\.tool), [.installer, .optimize, .clean])
         XCTAssertEqual(model.statusMessage, "Simple cleanup finished. Receipt saved locally.")
 
@@ -105,6 +108,24 @@ final class AppModelWorkflowTests: XCTestCase {
         XCTAssertTrue(log.contains("clean|dry=|app=Eagle"))
         XCTAssertTrue(log.contains("optimize|dry=|app=Eagle"))
         XCTAssertTrue(log.contains("installer|dry=|app=Eagle"))
+    }
+
+    func testGuidedCleanupExplainsNoOpPreviewWithoutCallingItRunnable() async throws {
+        let harness = try AppHarness(mode: .projectAndInstallerEmpty)
+        let model = try harness.makeModel()
+
+        await model.startGuidedScan()
+
+        let purge = try XCTUnwrap(model.guidedPlan?.items.first { $0.tool == .purge })
+        let installer = try XCTUnwrap(model.guidedPlan?.items.first { $0.tool == .installer })
+
+        XCTAssertFalse(purge.previewSucceeded)
+        XCTAssertTrue(purge.previewFoundNothing)
+        XCTAssertEqual(purge.statusText, "Nothing found")
+        XCTAssertTrue(purge.previewIssueText?.contains("nothing to run") == true)
+        XCTAssertFalse(installer.previewSucceeded)
+        XCTAssertTrue(installer.previewFoundNothing)
+        XCTAssertEqual(model.guidedSelectedTools, Set([.clean, .optimize]))
     }
 
     func testUninstallPreviewRequiresTargetAndDoesNotOpenReview() async throws {
@@ -121,12 +142,19 @@ final class AppModelWorkflowTests: XCTestCase {
 }
 
 private struct AppHarness {
+    enum Mode {
+        case normal
+        case projectAndInstallerEmpty
+    }
+
     let root: URL
     let executable: URL
     let log: URL
     let history: URL
+    let mode: Mode
 
-    init() throws {
+    init(mode: Mode = .normal) throws {
+        self.mode = mode
         root = FileManager.default.temporaryDirectory
             .appendingPathComponent("EagleTests-\(UUID().uuidString)", isDirectory: true)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
@@ -169,6 +197,20 @@ private struct AppHarness {
             ;;
           analyze)
             printf '{"path":"%s","overview":true,"entries":[{"name":"Caches","path":"%s/Caches","size":2048,"is_dir":true}],"total_size":2048,"total_files":1}\\n' "$3" "$3"
+            ;;
+          purge)
+            if [ "\(mode)" = "projectAndInstallerEmpty" ]; then
+              echo "Great! No old project artifacts to clean"
+              exit 2
+            fi
+            echo "ok:$*"
+            ;;
+          installer)
+            if [ "\(mode)" = "projectAndInstallerEmpty" ]; then
+              echo "Great! No installer files to clean"
+              exit 2
+            fi
+            echo "ok:$*"
             ;;
           *)
             echo "ok:$*"

@@ -24,7 +24,10 @@ let package = Package(
         ),
         .executableTarget(
             name: "Eagle",
-            dependencies: ["EagleCore"]
+            dependencies: ["EagleCore"],
+            resources: [
+                .process("Resources")
+            ]
         ),
         .testTarget(
             name: "EagleCoreTests",

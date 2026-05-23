@@ -29,8 +29,45 @@ struct GuidedCleanupItem: Identifiable, Equatable {
         preview.succeeded
     }
 
+    var previewFoundNothing: Bool {
+        let output = preview.combinedOutput.lowercased()
+        return output.contains("great! no")
+            || output.contains("no installer files to clean")
+            || output.contains("no old project artifacts to clean")
+            || (output.contains("no ") && output.contains("to clean"))
+    }
+
     var statusText: String {
-        previewSucceeded ? recommendation : "Needs attention before running"
+        if previewSucceeded {
+            return recommendation
+        }
+        if previewFoundNothing {
+            return "Nothing found"
+        }
+        return "Needs attention before running"
+    }
+
+    var previewIssueText: String? {
+        guard !previewSucceeded else { return nil }
+
+        if previewFoundNothing {
+            return "Eagle did not find anything matching this cleanup right now, so there is nothing to run for this item."
+        }
+
+        if preview.timedOut {
+            return "Preview timed out, so Eagle left this action off. Open raw command output for the command details."
+        }
+
+        let output = preview.combinedOutput
+            .split(whereSeparator: \.isNewline)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .first { !$0.isEmpty }
+
+        if let output {
+            return "Preview stopped with: \(output)"
+        }
+
+        return "Preview exited with code \(preview.exitCode), so Eagle left this action off."
     }
 }
 
@@ -64,6 +101,7 @@ final class AppModel: ObservableObject {
     @Published var guidedSelectedTools: Set<MoleTool> = []
     @Published var guidedReviewPresented = false
     @Published var guidedAccepted = false
+    @Published var guidedRunningTool: MoleTool?
 
     private let settingsStore: SettingsStore
     private let historyStore: HistoryStore
@@ -94,7 +132,7 @@ final class AppModel: ObservableObject {
     }
 
     var canRunGuidedCleanup: Bool {
-        guidedAccepted && !isRunning && !guidedSelectedItems.isEmpty
+        guidedAccepted && !isRunning && guidedPlan?.state == .ready && !guidedSelectedItems.isEmpty
     }
 
     var guidedSelectedItems: [GuidedCleanupItem] {
@@ -142,6 +180,7 @@ final class AppModel: ObservableObject {
         guard !isRunning else { return }
 
         guidedAccepted = false
+        guidedRunningTool = nil
         guidedReviewPresented = false
         guidedSelectedTools = []
         guidedPlan = GuidedCleanupPlan(state: .scanning, items: [], scannedAt: Date(), completedTools: [])
@@ -223,6 +262,8 @@ final class AppModel: ObservableObject {
     func executeGuidedCleanup() async {
         guard canRunGuidedCleanup, let guidedPlan else { return }
 
+        let selectedItems = guidedSelectedItems
+        guidedRunningTool = selectedItems.first?.tool
         self.guidedPlan = GuidedCleanupPlan(
             state: .running,
             items: guidedPlan.items,
@@ -233,7 +274,8 @@ final class AppModel: ObservableObject {
         var completedTools: [MoleTool] = []
         var technicalOutput: [String] = []
 
-        for item in guidedSelectedItems {
+        for item in selectedItems {
+            guidedRunningTool = item.tool
             do {
                 let invocation = try workflowFactory.executeInvocation(for: item.tool)
                 let result = await run(invocation, label: "Running \(item.tool.title)...")
@@ -270,7 +312,7 @@ final class AppModel: ObservableObject {
         statusMessage = completedTools.isEmpty
             ? "No selected cleanup actions ran."
             : "Simple cleanup finished. Receipt saved locally."
-        guidedReviewPresented = false
+        guidedRunningTool = nil
         guidedAccepted = false
     }
 

@@ -201,11 +201,11 @@ private struct GuidedItemCard: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Image(systemName: item.tool.systemImage)
-                    .foregroundStyle(item.previewSucceeded ? .blue : .orange)
+                    .foregroundStyle(item.previewSucceeded ? .blue : item.previewFoundNothing ? .secondary : .orange)
                 Spacer()
                 Text(status)
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(item.previewSucceeded ? (isSelected ? .green : .secondary) : .orange)
+                    .foregroundStyle(statusColor)
             }
             Text(item.title)
                 .font(.headline)
@@ -222,9 +222,16 @@ private struct GuidedItemCard: View {
 
     private var status: String {
         guard item.previewSucceeded else {
-            return "Needs review"
+            return item.previewFoundNothing ? "Nothing found" : "Needs review"
         }
         return isSelected ? "Selected" : item.recommendation
+    }
+
+    private var statusColor: Color {
+        if item.previewSucceeded {
+            return isSelected ? .green : .secondary
+        }
+        return item.previewFoundNothing ? .secondary : .orange
     }
 }
 
@@ -253,9 +260,12 @@ struct HeaderBlock: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Eagle")
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(.secondary)
+            HStack(spacing: 10) {
+                AppIconMark(size: 36)
+                Text("Eagle")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            }
             Text(title)
                 .font(.largeTitle.weight(.semibold))
             Text(subtitle)
