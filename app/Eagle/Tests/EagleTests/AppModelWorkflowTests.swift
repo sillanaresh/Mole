@@ -71,6 +71,42 @@ final class AppModelWorkflowTests: XCTestCase {
         XCTAssertTrue(log.contains("installer|dry=|app=Eagle"))
     }
 
+    func testGuidedCleanupScansDefaultsToSafeSelectionsAndRunsChosenTools() async throws {
+        let harness = try AppHarness()
+        let model = try harness.makeModel()
+
+        await model.startGuidedScan()
+
+        XCTAssertEqual(model.guidedPlan?.state, .ready)
+        XCTAssertEqual(model.guidedPlan?.items.map(\.tool), [.clean, .optimize, .purge, .installer])
+        XCTAssertEqual(model.statusSnapshot?.healthScore, 98)
+        XCTAssertEqual(model.analyzeReport?.entries.first?.name, "Caches")
+        XCTAssertEqual(model.guidedSelectedTools, Set([.clean, .optimize]))
+        XCTAssertFalse(model.canRunGuidedCleanup)
+
+        model.guidedSelectedTools.insert(.installer)
+        model.guidedAccepted = true
+        XCTAssertTrue(model.canRunGuidedCleanup)
+
+        await model.executeGuidedCleanup()
+
+        XCTAssertEqual(model.guidedPlan?.state, .finished)
+        XCTAssertEqual(model.guidedPlan?.completedTools, [.clean, .optimize, .installer])
+        XCTAssertEqual(model.history.map(\.tool), [.installer, .optimize, .clean])
+        XCTAssertEqual(model.statusMessage, "Simple cleanup finished. Receipt saved locally.")
+
+        let log = try harness.commandLog()
+        XCTAssertTrue(log.contains("status --json|dry=1|app=Eagle"))
+        XCTAssertTrue(log.contains("analyze --json \(NSHomeDirectory())|dry=1|app=Eagle"))
+        XCTAssertTrue(log.contains("clean --dry-run|dry=1|app=Eagle"))
+        XCTAssertTrue(log.contains("optimize --dry-run|dry=1|app=Eagle"))
+        XCTAssertTrue(log.contains("purge --dry-run|dry=1|app=Eagle"))
+        XCTAssertTrue(log.contains("installer --dry-run|dry=1|app=Eagle"))
+        XCTAssertTrue(log.contains("clean|dry=|app=Eagle"))
+        XCTAssertTrue(log.contains("optimize|dry=|app=Eagle"))
+        XCTAssertTrue(log.contains("installer|dry=|app=Eagle"))
+    }
+
     func testUninstallPreviewRequiresTargetAndDoesNotOpenReview() async throws {
         let harness = try AppHarness()
         let model = try harness.makeModel()

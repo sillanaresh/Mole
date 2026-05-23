@@ -27,11 +27,11 @@ Edit `config.js`:
 ```js
 window.EAGLE_CONFIG = {
   supportUrl: "https://buymeachai.ezee.li/nareshsilla",
-  downloadUrl: "/downloads/Eagle-preview.zip"
+  downloadUrl: "/downloads/Eagle-preview.dmg"
 };
 ```
 
-The current `supportUrl` points to Buy Me A Chai. The current `downloadUrl` points to the ad-hoc signed preview ZIP served by Vercel from `site/downloads/`.
+The current `supportUrl` points to Buy Me A Chai. The current `downloadUrl` points to the ad-hoc signed preview DMG served by Vercel from `site/downloads/`.
 
 ## Vercel
 

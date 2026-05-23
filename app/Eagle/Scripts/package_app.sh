@@ -96,4 +96,26 @@ if [[ "${1:-}" == "--zip" ]]; then
     fi
     ditto -c -k --keepParent "$APP_BUNDLE" "$ZIP_PATH"
     echo "Created $ZIP_PATH"
+elif [[ "${1:-}" == "--dmg" ]]; then
+    DMG_PATH="$BUILD_DIR/$DISPLAY_NAME.dmg"
+    DMG_STAGING="$BUILD_DIR/dmg-staging"
+    if [[ -f "$DMG_PATH" ]]; then
+        rm "$DMG_PATH"
+    fi
+    if [[ -d "$DMG_STAGING" ]]; then
+        case "$DMG_STAGING" in
+            "$BUILD_DIR"/dmg-staging)
+                rm -R "$DMG_STAGING"
+                ;;
+            *)
+                echo "Refusing to remove unexpected path: $DMG_STAGING" >&2
+                exit 1
+                ;;
+        esac
+    fi
+    mkdir -p "$DMG_STAGING"
+    cp -R "$APP_BUNDLE" "$DMG_STAGING/"
+    ln -s /Applications "$DMG_STAGING/Applications"
+    hdiutil create -volname "$DISPLAY_NAME" -srcfolder "$DMG_STAGING" -ov -format UDZO "$DMG_PATH"
+    echo "Created $DMG_PATH"
 fi

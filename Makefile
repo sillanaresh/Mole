@@ -1,6 +1,6 @@
 # Makefile for Mole
 
-.PHONY: all build clean check format test test-go verify release release-amd64 release-arm64 mod-download app-build app-test app-package app-package-zip app-notarize
+.PHONY: all build clean check format test test-go verify release release-amd64 release-arm64 mod-download app-build app-test app-package app-package-zip app-package-dmg app-notarize
 
 # Output directory
 BIN_DIR := bin
@@ -67,6 +67,9 @@ app-package:
 
 app-package-zip:
 	app/Eagle/Scripts/package_app.sh --zip
+
+app-package-dmg:
+	app/Eagle/Scripts/package_app.sh --dmg
 
 app-notarize:
 	app/Eagle/Scripts/notarize_app.sh

@@ -261,7 +261,7 @@ struct ConsoleView: View {
     }
 }
 
-private struct RawOutputDisclosure: View {
+struct RawOutputDisclosure: View {
     let text: String
     @State private var isExpanded = false
 

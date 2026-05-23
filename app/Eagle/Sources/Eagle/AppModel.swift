@@ -8,6 +8,43 @@ enum AppDestination: Hashable {
     case settings
 }
 
+enum GuidedCleanupState: Equatable {
+    case idle
+    case scanning
+    case ready
+    case running
+    case finished
+}
+
+struct GuidedCleanupItem: Identifiable, Equatable {
+    var id: MoleTool { tool }
+    let tool: MoleTool
+    let title: String
+    let summary: String
+    let recommendation: String
+    let defaultSelected: Bool
+    let preview: CommandResult
+
+    var previewSucceeded: Bool {
+        preview.succeeded
+    }
+
+    var statusText: String {
+        previewSucceeded ? recommendation : "Needs attention before running"
+    }
+}
+
+struct GuidedCleanupPlan: Equatable {
+    var state: GuidedCleanupState
+    var items: [GuidedCleanupItem]
+    var scannedAt: Date
+    var completedTools: [MoleTool]
+
+    var readyItems: [GuidedCleanupItem] {
+        items.filter(\.previewSucceeded)
+    }
+}
+
 @MainActor
 final class AppModel: ObservableObject {
     @Published var destination: AppDestination? = .dashboard
@@ -23,6 +60,10 @@ final class AppModel: ObservableObject {
     @Published var uninstallTarget: String = ""
     @Published var analyzePath: String = NSHomeDirectory()
     @Published var reviewAccepted = false
+    @Published var guidedPlan: GuidedCleanupPlan?
+    @Published var guidedSelectedTools: Set<MoleTool> = []
+    @Published var guidedReviewPresented = false
+    @Published var guidedAccepted = false
 
     private let settingsStore: SettingsStore
     private let historyStore: HistoryStore
@@ -50,6 +91,17 @@ final class AppModel: ObservableObject {
 
     var canExecuteReview: Bool {
         reviewAccepted && (reviewSession?.preview.succeeded == true) && !isRunning
+    }
+
+    var canRunGuidedCleanup: Bool {
+        guidedAccepted && !isRunning && !guidedSelectedItems.isEmpty
+    }
+
+    var guidedSelectedItems: [GuidedCleanupItem] {
+        guard let guidedPlan else {
+            return []
+        }
+        return guidedPlan.items.filter { guidedSelectedTools.contains($0.tool) && $0.previewSucceeded }
     }
 
     func bootstrap() async {
@@ -86,6 +138,56 @@ final class AppModel: ObservableObject {
         }
     }
 
+    func startGuidedScan() async {
+        guard !isRunning else { return }
+
+        guidedAccepted = false
+        guidedReviewPresented = false
+        guidedSelectedTools = []
+        guidedPlan = GuidedCleanupPlan(state: .scanning, items: [], scannedAt: Date(), completedTools: [])
+        commandOutput = ""
+
+        let statusResult = await run(workflowFactory.statusInvocation(), label: "Checking Mac health...")
+        if let data = statusResult.stdout.data(using: .utf8),
+           let snapshot = try? decoder.decode(StatusSnapshot.self, from: data) {
+            statusSnapshot = snapshot
+        }
+
+        let analyzeResult = await run(workflowFactory.analyzeInvocation(path: NSHomeDirectory()), label: "Looking for large local folders...")
+        if let data = analyzeResult.stdout.data(using: .utf8),
+           let report = try? decoder.decode(AnalyzeReport.self, from: data) {
+            analyzeReport = report
+        }
+
+        var items: [GuidedCleanupItem] = []
+        for tool in Self.guidedCleanupTools {
+            do {
+                let invocation = try workflowFactory.previewInvocation(for: tool)
+                let result = await run(invocation, label: "Previewing \(tool.title)...")
+                items.append(Self.guidedItem(for: tool, preview: result))
+            } catch {
+                let now = Date()
+                let result = CommandResult(
+                    commandLine: "mole \(tool.rawValue) --dry-run",
+                    arguments: [tool.rawValue, "--dry-run"],
+                    startedAt: now,
+                    finishedAt: now,
+                    exitCode: -1,
+                    stdout: "",
+                    stderr: error.localizedDescription
+                )
+                items.append(Self.guidedItem(for: tool, preview: result))
+            }
+        }
+
+        guidedSelectedTools = Set(items.filter { $0.defaultSelected && $0.previewSucceeded }.map(\.tool))
+        guidedPlan = GuidedCleanupPlan(state: .ready, items: items, scannedAt: Date(), completedTools: [])
+        commandOutput = Self.guidedTechnicalSummary(status: statusResult, analyze: analyzeResult, items: items)
+        statusMessage = items.contains(where: \.previewSucceeded)
+            ? "Simple scan ready. Review the cleanup plan."
+            : "Simple scan finished, but no safe actions are ready."
+    }
+
     func executeReview() async {
         guard let reviewSession, canExecuteReview else { return }
 
@@ -116,6 +218,60 @@ final class AppModel: ObservableObject {
         } catch {
             show(error)
         }
+    }
+
+    func executeGuidedCleanup() async {
+        guard canRunGuidedCleanup, let guidedPlan else { return }
+
+        self.guidedPlan = GuidedCleanupPlan(
+            state: .running,
+            items: guidedPlan.items,
+            scannedAt: guidedPlan.scannedAt,
+            completedTools: []
+        )
+
+        var completedTools: [MoleTool] = []
+        var technicalOutput: [String] = []
+
+        for item in guidedSelectedItems {
+            do {
+                let invocation = try workflowFactory.executeInvocation(for: item.tool)
+                let result = await run(invocation, label: "Running \(item.tool.title)...")
+                technicalOutput.append("=== \(item.tool.title) ===")
+                technicalOutput.append(result.combinedOutput)
+
+                let entry = HistoryEntry(
+                    tool: item.tool,
+                    target: nil,
+                    startedAt: result.startedAt,
+                    completedAt: result.finishedAt,
+                    previewExitCode: item.preview.exitCode,
+                    executionExitCode: result.exitCode,
+                    succeeded: result.succeeded,
+                    timedOut: result.timedOut,
+                    commandLine: result.commandLine,
+                    outputPreview: result.combinedOutput.condensedForReceipt()
+                )
+                history = (try? historyStore.append(entry)) ?? history
+                completedTools.append(item.tool)
+            } catch {
+                technicalOutput.append("=== \(item.tool.title) ===")
+                technicalOutput.append(error.localizedDescription)
+            }
+        }
+
+        self.guidedPlan = GuidedCleanupPlan(
+            state: .finished,
+            items: guidedPlan.items,
+            scannedAt: guidedPlan.scannedAt,
+            completedTools: completedTools
+        )
+        commandOutput = technicalOutput.joined(separator: "\n\n")
+        statusMessage = completedTools.isEmpty
+            ? "No selected cleanup actions ran."
+            : "Simple cleanup finished. Receipt saved locally."
+        guidedReviewPresented = false
+        guidedAccepted = false
     }
 
     func refreshStatus() async {
@@ -195,5 +351,77 @@ final class AppModel: ObservableObject {
     private func show(_ error: Error) {
         commandOutput = error.localizedDescription
         statusMessage = error.localizedDescription
+    }
+
+    private static let guidedCleanupTools: [MoleTool] = [.clean, .optimize, .purge, .installer]
+
+    private static func guidedItem(for tool: MoleTool, preview: CommandResult) -> GuidedCleanupItem {
+        switch tool {
+        case .clean:
+            return GuidedCleanupItem(
+                tool: tool,
+                title: "Everyday cleanup",
+                summary: "Caches, logs, browser temporary files, and rebuildable developer clutter.",
+                recommendation: "Suggested",
+                defaultSelected: true,
+                preview: preview
+            )
+        case .optimize:
+            return GuidedCleanupItem(
+                tool: tool,
+                title: "Mac maintenance",
+                summary: "Safe maintenance checks such as DNS, indexes, logs, and service refreshes.",
+                recommendation: "Suggested",
+                defaultSelected: true,
+                preview: preview
+            )
+        case .purge:
+            return GuidedCleanupItem(
+                tool: tool,
+                title: "Project cleanup",
+                summary: "Build outputs and dependency folders inside development projects.",
+                recommendation: "Optional, review first",
+                defaultSelected: false,
+                preview: preview
+            )
+        case .installer:
+            return GuidedCleanupItem(
+                tool: tool,
+                title: "Installer cleanup",
+                summary: "Old DMGs, PKGs, ZIPs, and duplicate installer downloads.",
+                recommendation: "Optional, review first",
+                defaultSelected: false,
+                preview: preview
+            )
+        case .uninstall, .analyze, .status:
+            return GuidedCleanupItem(
+                tool: tool,
+                title: tool.title,
+                summary: tool.subtitle,
+                recommendation: "Advanced tool",
+                defaultSelected: false,
+                preview: preview
+            )
+        }
+    }
+
+    private static func guidedTechnicalSummary(
+        status: CommandResult,
+        analyze: CommandResult,
+        items: [GuidedCleanupItem]
+    ) -> String {
+        var sections = [
+            "=== Mac health ===",
+            status.combinedOutput,
+            "=== Disk scan ===",
+            analyze.combinedOutput
+        ]
+
+        for item in items {
+            sections.append("=== \(item.title) preview ===")
+            sections.append(item.preview.combinedOutput)
+        }
+
+        return sections.joined(separator: "\n\n")
     }
 }

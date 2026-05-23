@@ -48,8 +48,8 @@ function syncLinks() {
         );
       });
     } else if (downloadNote) {
-      downloadLink.setAttribute("download", "Eagle-preview.zip");
-      downloadNote.textContent = "Not notarized yet, no paid Apple Developer ID. First launch: right-click Open. If macOS says damaged, run xattr -dr com.apple.quarantine /Applications/Eagle.app once.";
+      downloadLink.setAttribute("download", "Eagle-preview.dmg");
+      downloadNote.textContent = "Open the DMG, drag Eagle to Applications, then right-click Open the first time. Not notarized yet, no paid Apple Developer ID.";
     }
   });
 }

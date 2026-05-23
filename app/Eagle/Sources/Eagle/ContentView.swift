@@ -43,6 +43,10 @@ struct ContentView: View {
             ReviewSheet(model: model)
                 .frame(minWidth: 760, minHeight: 560)
         }
+        .sheet(isPresented: $model.guidedReviewPresented) {
+            GuidedReviewSheet(model: model)
+                .frame(minWidth: 780, minHeight: 620)
+        }
     }
 
     @ViewBuilder

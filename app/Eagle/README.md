@@ -64,6 +64,18 @@ This creates:
 app/Eagle/.build/Eagle.zip
 ```
 
+For the website download, build the drag-to-Applications DMG:
+
+```bash
+make app-package-dmg
+```
+
+This creates:
+
+```text
+app/Eagle/.build/Eagle.dmg
+```
+
 ## Sign And Notarize
 
 For a Developer ID build:
