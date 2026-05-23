@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Box Picker</title>
+  <link rel="stylesheet" href="./boxes.css">
+</head>
+<body>
+  <main class="box-tool">
+    <aside class="box-panel">
+      <h1>Image Boxes</h1>
+      <p>Drag each box or its bottom-right handle. Copy the coordinates and send them back.</p>
+      <pre data-output></pre>
+      <button type="button" data-copy>Copy coordinates</button>
+      <a href="./">Back to website</a>
+    </aside>
+
+    <section class="canvas-wrap" aria-label="Screenshot coordinate picker">
+      <div class="canvas" data-canvas>
+        <img src="./assets/app-dashboard.png" alt="App dashboard source image" data-source-image>
+        <div class="crop-box hero-box" data-box="hero">
+          <span>top full app</span>
+          <i data-resize></i>
+        </div>
+        <div class="crop-box sidebar-box" data-box="sidebar">
+          <span>second sidebar</span>
+          <i data-resize></i>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="./boxes.js"></script>
+</body>
+</html>

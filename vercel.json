@@ -13,15 +13,10 @@
         {
           "key": "Referrer-Policy",
           "value": "strict-origin-when-cross-origin"
-        }
-      ]
-    },
-    {
-      "source": "/:path*.(css|js|svg)",
-      "headers": [
+        },
         {
           "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
+          "value": "no-store"
         }
       ]
     }

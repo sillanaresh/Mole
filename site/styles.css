@@ -539,6 +539,16 @@ h1 {
   background: #fff;
 }
 
+.sidebar-shell {
+  width: min(100%, 420px);
+  aspect-ratio: 520 / 1450;
+  background: #fff;
+}
+
+.sidebar-shell .app-screenshot {
+  object-fit: contain;
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -827,70 +837,6 @@ details p {
 [data-reveal].is-visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-[data-frame-mode="true"] [data-frame-target] {
-  outline: 3px solid #ff6b00;
-  outline-offset: 5px;
-}
-
-[data-frame-mode="true"] [data-frame-target]::after {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  z-index: 5;
-  padding: 6px 8px;
-  border-radius: 6px;
-  background: #ff6b00;
-  color: white;
-  font: 700 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-
-[data-frame-mode="true"] [data-frame-target="hero"]::after {
-  content: "hero image box";
-}
-
-[data-frame-mode="true"] [data-frame-target="product"]::after {
-  content: "product image box";
-}
-
-.frame-panel {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 50;
-  display: grid;
-  gap: 10px;
-  width: min(360px, calc(100vw - 32px));
-  padding: 14px;
-  border: 1px solid rgba(30, 36, 33, .22);
-  border-radius: var(--radius);
-  background: rgba(255, 250, 240, .94);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(18px);
-}
-
-.frame-panel strong {
-  font-size: 14px;
-}
-
-.frame-panel label {
-  display: grid;
-  gap: 5px;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 720;
-}
-
-.frame-panel input {
-  width: 100%;
-}
-
-.frame-panel pre {
-  margin: 0;
-  white-space: pre-wrap;
-  color: var(--ink);
-  font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 @media (max-width: 980px) {

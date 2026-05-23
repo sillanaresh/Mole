@@ -10,13 +10,13 @@ python3 -m http.server 4173 -d site
 
 Open `http://127.0.0.1:4173/`.
 
-To tune screenshot boxes, open:
+To tune screenshot crop boxes, open:
 
 ```text
-http://127.0.0.1:4173/?frame=1
+http://127.0.0.1:4173/boxes.html
 ```
 
-The frame panel outlines the hero and product screenshots, lets you adjust their widths and top gaps, and prints the values to copy back into `styles.css`.
+Drag or resize the boxes on top of the source screenshot, then copy the printed coordinates.
 
 ## Configure Links
 
