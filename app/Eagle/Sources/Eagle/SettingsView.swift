@@ -7,17 +7,17 @@ struct SettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
-                HeaderBlock(title: "Settings", subtitle: "Local paths, support link, and launch readiness.")
+                HeaderBlock(title: "Settings", subtitle: "Connection, safety, and support options.")
 
-                GroupBox("Mole Adapter") {
+                GroupBox("Cleanup Engine") {
                     VStack(alignment: .leading, spacing: 12) {
-                        TextField("Path to mole or mo", text: $model.settings.moleBinaryPath)
+                        TextField("Path to Eagle cleanup engine", text: $model.settings.moleBinaryPath)
                             .textFieldStyle(.roundedBorder)
                         HStack {
                             Button {
                                 model.autoDetectMole()
                             } label: {
-                                Label("Auto-detect", systemImage: "scope")
+                                Label("Find Automatically", systemImage: "scope")
                             }
                             Button {
                                 model.saveSettings()
@@ -26,7 +26,7 @@ struct SettingsView: View {
                             }
                             Spacer()
                         }
-                        Text(model.activeMolePath.isEmpty ? "No Mole binary found." : model.activeMolePath)
+                        Text(model.activeMolePath.isEmpty ? "Cleanup engine not found." : model.activeMolePath)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .textSelection(.enabled)
@@ -36,8 +36,8 @@ struct SettingsView: View {
 
                 GroupBox("Safety") {
                     VStack(alignment: .leading, spacing: 12) {
-                        Toggle("Skip privileged authorization prompts from the app", isOn: $model.settings.skipPrivilegedAuthorization)
-                        Text("When enabled, Mole receives MOLE_TEST_NO_AUTH=1 so the app does not hang on sudo prompts. Disable only when testing privileged behavior deliberately.")
+                        Toggle("Avoid password prompts inside Eagle", isOn: $model.settings.skipPrivilegedAuthorization)
+                        Text("Keep this on for normal use. Some deeper cleanup may be skipped instead of asking for a password.")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
@@ -49,7 +49,7 @@ struct SettingsView: View {
                         Button {
                             model.saveSettings()
                         } label: {
-                            Label("Save Safety Settings", systemImage: "checkmark.circle")
+                            Label("Save Safety Options", systemImage: "checkmark.circle")
                         }
                     }
                     .padding(.vertical, 6)
@@ -59,7 +59,7 @@ struct SettingsView: View {
                     VStack(alignment: .leading, spacing: 12) {
                         TextField("Optional support URL", text: $model.settings.supportURL)
                             .textFieldStyle(.roundedBorder)
-                        Text("Support is optional and never unlocks features.")
+                        Text("Support is optional. Eagle works the same either way.")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                         Button {
@@ -73,8 +73,8 @@ struct SettingsView: View {
 
                 GroupBox("Attribution") {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Eagle is a separate Mac app concept built around the MIT-licensed Mole CLI by Tw93 and contributors.")
-                        Text("The app preserves Mole attribution, keeps cleanup local, and routes destructive work through Mole command flows.")
+                        Text("Eagle uses the open-source Mole cleanup project by Tw93 and contributors.")
+                        Text("The app includes the MIT license and keeps cleanup work on your Mac.")
                             .foregroundStyle(.secondary)
                     }
                     .font(.callout)

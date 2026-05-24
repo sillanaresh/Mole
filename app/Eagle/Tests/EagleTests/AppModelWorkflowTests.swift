@@ -17,7 +17,7 @@ final class AppModelWorkflowTests: XCTestCase {
         await model.scanAnalyze()
         XCTAssertEqual(model.analyzeReport?.path, harness.root.path)
         XCTAssertEqual(model.analyzeReport?.entries.first?.name, "Caches")
-        XCTAssertEqual(model.statusMessage, "Analyze scan complete.")
+        XCTAssertEqual(model.statusMessage, "Large-file scan complete.")
 
         let log = try harness.commandLog()
         XCTAssertTrue(log.contains("status --json|dry=1|app=Eagle"))
@@ -42,7 +42,7 @@ final class AppModelWorkflowTests: XCTestCase {
             await model.preview(tool)
             XCTAssertEqual(model.reviewSession?.tool, tool)
             XCTAssertEqual(model.reviewSession?.target, target)
-            XCTAssertEqual(model.statusMessage, "Preview ready. Review before running.")
+            XCTAssertEqual(model.statusMessage, "Ready to review.")
             XCTAssertFalse(model.canExecuteReview)
 
             model.reviewAccepted = true
@@ -53,7 +53,7 @@ final class AppModelWorkflowTests: XCTestCase {
             XCTAssertFalse(model.reviewAccepted)
             XCTAssertEqual(model.history.first?.tool, tool)
             XCTAssertEqual(model.history.first?.target, target)
-            XCTAssertEqual(model.statusMessage, "Finished. Receipt saved locally.")
+            XCTAssertEqual(model.statusMessage, "Finished. History saved.")
         }
 
         XCTAssertEqual(model.history.map(\.tool), workflows.reversed().map(\.0))
@@ -96,7 +96,7 @@ final class AppModelWorkflowTests: XCTestCase {
         XCTAssertNil(model.guidedRunningTool)
         XCTAssertTrue(model.guidedReviewPresented)
         XCTAssertEqual(model.history.map(\.tool), [.installer, .optimize, .clean])
-        XCTAssertEqual(model.statusMessage, "Simple cleanup finished. Receipt saved locally.")
+        XCTAssertEqual(model.statusMessage, "Simple cleanup finished. History saved.")
 
         let log = try harness.commandLog()
         XCTAssertTrue(log.contains("status --json|dry=1|app=Eagle"))

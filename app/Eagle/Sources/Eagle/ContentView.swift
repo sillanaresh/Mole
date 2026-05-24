@@ -79,7 +79,7 @@ private struct StatusBar: View {
             Circle()
                 .fill(model.adapterReady ? .green : .orange)
                 .frame(width: 8, height: 8)
-            Text(model.adapterReady ? "Mole connected" : "Mole missing")
+            Text(model.adapterReady ? "Ready" : "Setup needed")
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
         }

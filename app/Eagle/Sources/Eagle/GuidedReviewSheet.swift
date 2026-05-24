@@ -12,7 +12,7 @@ struct GuidedReviewSheet: View {
         VStack(alignment: .leading, spacing: 18) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(isFinished ? "Cleanup receipt" : "Review simple cleanup")
+                    Text(isFinished ? "Cleanup summary" : "Review simple cleanup")
                         .font(.title2.weight(.semibold))
                     Text(headerSubtitle(isRunning: isRunning, isFinished: isFinished))
                         .foregroundStyle(.secondary)
@@ -55,7 +55,7 @@ struct GuidedReviewSheet: View {
                 .clipShape(RoundedRectangle(cornerRadius: 8))
 
                 if !isFinished {
-                    Toggle("I reviewed the plan and want Eagle to run the selected cleanup actions.", isOn: $model.guidedAccepted)
+                    Toggle("I understand this plan and want Eagle to clean the selected items.", isOn: $model.guidedAccepted)
                         .disabled(isRunning)
                 }
 
@@ -106,10 +106,10 @@ struct GuidedReviewSheet: View {
 
     private func headerSubtitle(isRunning: Bool, isFinished: Bool) -> String {
         if isRunning {
-            return "Eagle is running the actions you selected. Keep this window open until the receipt appears."
+            return "Eagle is cleaning the items you selected. Keep this window open until the summary appears."
         }
         if isFinished {
-            return "These are the cleanup actions Eagle completed. The full technical log is saved below."
+            return "These are the items Eagle finished cleaning. Details are available below if you need them."
         }
         return "Suggested items are checked. Optional areas stay unchecked until you choose them."
     }
@@ -195,7 +195,7 @@ private struct ReceiptBanner: View {
                 .font(.headline)
                 .foregroundStyle(.green)
             if plan.completedTools.isEmpty {
-                Text("No selected cleanup action completed. Open raw command output for details.")
+                Text("No selected item was cleaned. Open details below to see what happened.")
                     .foregroundStyle(.secondary)
             } else {
                 Text("Completed: \(plan.completedTools.map(\.title).joined(separator: ", "))")

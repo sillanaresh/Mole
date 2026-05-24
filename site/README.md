@@ -1,6 +1,6 @@
 # Eagle Website Prototype
 
-Static website for the free Eagle Mac utility.
+Static website for the free Eagle Mac cleanup app.
 
 ## Local Preview
 

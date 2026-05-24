@@ -18,7 +18,7 @@ public enum MoleTool: String, CaseIterable, Codable, Identifiable, Sendable {
         case .optimize: return "Optimize"
         case .analyze: return "Analyze"
         case .status: return "Status"
-        case .purge: return "Purge"
+        case .purge: return "Project Cleanup"
         case .installer: return "Installer Cleanup"
         }
     }
@@ -26,19 +26,19 @@ public enum MoleTool: String, CaseIterable, Codable, Identifiable, Sendable {
     public var subtitle: String {
         switch self {
         case .clean:
-            return "Caches, logs, browser temp files, and developer clutter."
+            return "Caches, logs, temporary files, browser clutter, and build leftovers."
         case .uninstall:
-            return "Apps plus preferences, support files, launch agents, and safe leftovers."
+            return "Remove an app and the extra files it leaves behind."
         case .optimize:
-            return "Maintenance tasks, indexes, logs, DNS, and macOS service refreshes."
+            return "Basic Mac maintenance such as DNS, logs, indexes, and service refreshes."
         case .analyze:
-            return "Disk usage explorer with JSON output for review."
+            return "Find large folders and understand where your storage is going."
         case .status:
-            return "CPU, memory, disk, battery, process, and health snapshot."
+            return "Check memory, CPU, disk, battery, uptime, and overall Mac health."
         case .purge:
-            return "Project artifacts such as dependency folders and build outputs."
+            return "Clean build folders and dependency caches inside development projects."
         case .installer:
-            return "Old DMGs, PKGs, ZIPs, and redundant installer archives."
+            return "Old DMGs, PKGs, ZIPs, and duplicate installer downloads."
         }
     }
 
@@ -70,7 +70,7 @@ public enum MoleTool: String, CaseIterable, Codable, Identifiable, Sendable {
         case .uninstall, .purge, .installer:
             return "Review"
         case .analyze, .status:
-            return "Read only"
+            return "Check only"
         }
     }
 }

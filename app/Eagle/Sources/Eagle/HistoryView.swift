@@ -7,7 +7,7 @@ struct HistoryView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            HeaderBlock(title: "History", subtitle: "Local receipts for confirmed operations.")
+            HeaderBlock(title: "History", subtitle: "A list of cleanup actions Eagle has run.")
 
             HStack {
                 Button {
@@ -16,7 +16,7 @@ struct HistoryView: View {
                     Label("Reload", systemImage: "arrow.clockwise")
                 }
                 Spacer()
-                Text("\(model.history.count) receipts")
+                Text("\(model.history.count) items")
                     .foregroundStyle(.secondary)
             }
 
@@ -56,7 +56,7 @@ struct HistoryView: View {
                         Image(systemName: "clock")
                             .font(.largeTitle)
                             .foregroundStyle(.secondary)
-                        Text("Select a receipt")
+                        Text("Select an item")
                             .font(.headline)
                             .foregroundStyle(.secondary)
                     }

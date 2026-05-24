@@ -55,7 +55,7 @@ struct GuidedCleanupItem: Identifiable, Equatable {
         }
 
         if preview.timedOut {
-            return "Preview timed out, so Eagle left this action off. Open raw command output for the command details."
+            return "This check took too long, so Eagle left it off. Open details below if you want to see more."
         }
 
         let output = preview.combinedOutput
@@ -64,10 +64,10 @@ struct GuidedCleanupItem: Identifiable, Equatable {
             .first { !$0.isEmpty }
 
         if let output {
-            return "Preview stopped with: \(output)"
+            return "Eagle could not check this item: \(output)"
         }
 
-        return "Preview exited with code \(preview.exitCode), so Eagle left this action off."
+        return "Eagle could not check this item, so it was left off."
     }
 }
 
@@ -146,14 +146,14 @@ final class AppModel: ObservableObject {
         if adapterReady {
             await refreshStatus()
         } else {
-            statusMessage = "Choose a Mole binary in Settings."
+            statusMessage = "Open Settings and choose the cleanup engine."
         }
     }
 
     func saveSettings() {
         settingsStore.save(settings)
         detectedMolePath = MoleLocator.locate(preferredPath: settings.moleBinaryPath) ?? ""
-        statusMessage = adapterReady ? "Settings saved." : "Settings saved. Mole binary not found."
+        statusMessage = adapterReady ? "Settings saved." : "Settings saved, but the cleanup engine was not found."
     }
 
     func autoDetectMole() {
@@ -170,7 +170,7 @@ final class AppModel: ObservableObject {
             let result = await run(invocation, label: "Previewing \(tool.title)...")
             commandOutput = result.combinedOutput
             reviewSession = ReviewSession(tool: tool, target: target(for: tool), preview: result)
-            statusMessage = result.succeeded ? "Preview ready. Review before running." : "Preview finished with warnings."
+            statusMessage = result.succeeded ? "Ready to review." : "Check finished with warnings."
         } catch {
             show(error)
         }
@@ -224,7 +224,7 @@ final class AppModel: ObservableObject {
         commandOutput = Self.guidedTechnicalSummary(status: statusResult, analyze: analyzeResult, items: items)
         statusMessage = items.contains(where: \.previewSucceeded)
             ? "Simple scan ready. Review the cleanup plan."
-            : "Simple scan finished, but no safe actions are ready."
+            : "Simple scan finished, but nothing is ready to clean."
     }
 
     func executeReview() async {
@@ -251,7 +251,7 @@ final class AppModel: ObservableObject {
                 outputPreview: result.combinedOutput.condensedForReceipt()
             )
             history = (try? historyStore.append(entry)) ?? history
-            statusMessage = result.succeeded ? "Finished. Receipt saved locally." : "Finished with errors. Receipt saved locally."
+            statusMessage = result.succeeded ? "Finished. History saved." : "Finished with errors. History saved."
             self.reviewSession = nil
             reviewAccepted = false
         } catch {
@@ -311,7 +311,7 @@ final class AppModel: ObservableObject {
         commandOutput = technicalOutput.joined(separator: "\n\n")
         statusMessage = completedTools.isEmpty
             ? "No selected cleanup actions ran."
-            : "Simple cleanup finished. Receipt saved locally."
+            : "Simple cleanup finished. History saved."
         guidedRunningTool = nil
         guidedAccepted = false
     }
@@ -325,7 +325,7 @@ final class AppModel: ObservableObject {
             statusSnapshot = snapshot
             statusMessage = "Status refreshed."
         } else {
-            statusMessage = "Status command ran, but JSON could not be decoded."
+            statusMessage = "Status ran, but Eagle could not read the result."
         }
     }
 
@@ -337,9 +337,9 @@ final class AppModel: ObservableObject {
         if let data = result.stdout.data(using: .utf8),
            let report = try? decoder.decode(AnalyzeReport.self, from: data) {
             analyzeReport = report
-            statusMessage = "Analyze scan complete."
+            statusMessage = "Large-file scan complete."
         } else {
-            statusMessage = "Analyze command ran, but JSON could not be decoded."
+            statusMessage = "Large-file scan ran, but Eagle could not read the result."
         }
     }
 
@@ -375,10 +375,10 @@ final class AppModel: ObservableObject {
                 finishedAt: now,
                 exitCode: -1,
                 stdout: "",
-                stderr: "Mole binary not found. Open Settings and choose the repo's mole script or an installed mo binary."
+                stderr: "Cleanup engine not found. Open Settings and choose the bundled or installed engine."
             )
             commandOutput = result.combinedOutput
-            statusMessage = "Mole binary not found."
+            statusMessage = "Cleanup engine not found."
             return result
         }
 
@@ -403,7 +403,7 @@ final class AppModel: ObservableObject {
             return GuidedCleanupItem(
                 tool: tool,
                 title: "Everyday cleanup",
-                summary: "Caches, logs, browser temporary files, and rebuildable developer clutter.",
+                summary: "Caches, logs, browser temporary files, and build leftovers.",
                 recommendation: "Suggested",
                 defaultSelected: true,
                 preview: preview
@@ -412,7 +412,7 @@ final class AppModel: ObservableObject {
             return GuidedCleanupItem(
                 tool: tool,
                 title: "Mac maintenance",
-                summary: "Safe maintenance checks such as DNS, indexes, logs, and service refreshes.",
+                summary: "Basic Mac maintenance such as DNS, indexes, logs, and service refreshes.",
                 recommendation: "Suggested",
                 defaultSelected: true,
                 preview: preview
@@ -421,8 +421,8 @@ final class AppModel: ObservableObject {
             return GuidedCleanupItem(
                 tool: tool,
                 title: "Project cleanup",
-                summary: "Build outputs and dependency folders inside development projects.",
-                recommendation: "Optional, review first",
+                summary: "Build folders and dependency caches inside development projects.",
+                recommendation: "Optional",
                 defaultSelected: false,
                 preview: preview
             )
@@ -431,7 +431,7 @@ final class AppModel: ObservableObject {
                 tool: tool,
                 title: "Installer cleanup",
                 summary: "Old DMGs, PKGs, ZIPs, and duplicate installer downloads.",
-                recommendation: "Optional, review first",
+                recommendation: "Optional",
                 defaultSelected: false,
                 preview: preview
             )

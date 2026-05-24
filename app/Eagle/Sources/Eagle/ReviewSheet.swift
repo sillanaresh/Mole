@@ -24,13 +24,13 @@ struct ReviewSheet: View {
                 }
             }
 
-            Text("This preview came from Mole dry-run mode. Execution stays disabled until the preview succeeds and you confirm that you reviewed the output.")
+            Text("Eagle checked this action first. It will not run until you review the details and confirm.")
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
 
             ConsoleView(text: model.reviewSession?.preview.combinedOutput ?? "")
 
-            Toggle("I reviewed the dry-run output and want to run this action.", isOn: $model.reviewAccepted)
+            Toggle("I reviewed this and want Eagle to run it.", isOn: $model.reviewAccepted)
 
             HStack {
                 Spacer()
@@ -44,7 +44,7 @@ struct ReviewSheet: View {
                 Button {
                     Task { await model.executeReview() }
                 } label: {
-                    Label("Run Confirmed Action", systemImage: "checkmark.shield")
+                    Label("Run This Action", systemImage: "checkmark.shield")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(!model.canExecuteReview)

@@ -8,8 +8,8 @@ struct DashboardView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 HeaderBlock(
-                    title: "Clean up your Mac without needing to understand the tools.",
-                    subtitle: "Start with one guided scan. Eagle explains the plan in plain language, asks before changing anything, and keeps the advanced controls nearby."
+                    title: "Clean up your Mac without guessing what is safe to delete.",
+                    subtitle: "Start with one scan. Eagle finds common junk, shows the plan in plain English, and asks before it deletes anything."
                 )
 
                 GuidedCleanupPanel(model: model)
@@ -26,9 +26,9 @@ struct DashboardView: View {
                         detail: model.statusSnapshot?.uptime ?? "Local only"
                     )
                     MetricCard(
-                        title: "Receipts",
+                        title: "History",
                         value: "\(model.history.count)",
-                        detail: "Stored in Application Support"
+                        detail: "Saved on this Mac"
                     )
                 }
 
@@ -36,7 +36,7 @@ struct DashboardView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Advanced tools")
                             .font(.title2.weight(.semibold))
-                        Text("Use these when you want direct control over one area.")
+                        Text("Use these when you want to clean or check one specific area.")
                             .foregroundStyle(.secondary)
                     }
                     Spacer()
@@ -80,7 +80,7 @@ private struct GuidedCleanupPanel: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Simple cleanup")
                         .font(.title2.weight(.semibold))
-                    Text("Run one scan across everyday cleanup, maintenance, project clutter, and old installers. Eagle previews first and leaves optional areas unchecked until you review them.")
+                    Text("Scan for common junk, old installers, project clutter, and basic Mac maintenance. Eagle shows you the plan before cleaning.")
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -101,9 +101,9 @@ private struct GuidedCleanupPanel: View {
                 GuidedPlanSummary(model: model, plan: guidedPlan)
             } else {
                 HStack(spacing: 12) {
-                    GuidedPromise(title: "Plain language", detail: "No JSON unless you open technical output.")
-                    GuidedPromise(title: "Preview first", detail: "Scan results come before any cleanup.")
-                    GuidedPromise(title: "You choose", detail: "Riskier areas stay optional.")
+                    GuidedPromise(title: "Plain English", detail: "The main plan avoids confusing logs.")
+                    GuidedPromise(title: "Shows first", detail: "You see what Eagle found before cleanup.")
+                    GuidedPromise(title: "You decide", detail: "Optional areas stay off until you pick them.")
                 }
             }
         }

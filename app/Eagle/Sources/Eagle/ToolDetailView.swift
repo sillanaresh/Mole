@@ -36,7 +36,7 @@ private struct DestructiveToolView: View {
                     Button {
                         Task { await model.preview(tool) }
                     } label: {
-                        Label("Preview", systemImage: "doc.text.magnifyingglass")
+                        Label("Check First", systemImage: "doc.text.magnifyingglass")
                     }
                     .buttonStyle(.borderedProminent)
                     .disabled(model.isRunning)
@@ -44,7 +44,7 @@ private struct DestructiveToolView: View {
                     Button {
                         model.commandOutput = ""
                     } label: {
-                        Label("Clear Output", systemImage: "xmark.circle")
+                        Label("Clear Details", systemImage: "xmark.circle")
                     }
                     .disabled(model.commandOutput.isEmpty)
                 }
@@ -63,10 +63,10 @@ private struct SafetyStrip: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            SafetyItem(title: "Preview first", detail: "Dry-run runs before changes.")
-            SafetyItem(title: "Confirmation", detail: "Execution is locked behind review.")
-            SafetyItem(title: "Receipts", detail: "A local history entry is saved.")
-            SafetyItem(title: "Routing", detail: tool == .uninstall ? "Trash by default." : "Mole safety helpers.")
+            SafetyItem(title: "Checks first", detail: "Eagle shows details before changes.")
+            SafetyItem(title: "You confirm", detail: "Cleanup waits until you approve it.")
+            SafetyItem(title: "History saved", detail: "A local summary is saved.")
+            SafetyItem(title: "Safer delete", detail: tool == .uninstall ? "Uses Trash where possible." : "Avoids protected folders.")
         }
     }
 }
@@ -101,7 +101,7 @@ private struct StatusToolView: View {
                 Button {
                     Task { await model.refreshStatus() }
                 } label: {
-                    Label("Refresh Status", systemImage: "arrow.clockwise")
+                        Label("Refresh", systemImage: "arrow.clockwise")
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(model.isRunning)
@@ -159,10 +159,10 @@ private struct AnalyzeToolView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
-                HeaderBlock(title: "Analyze", subtitle: MoleTool.analyze.subtitle)
+                HeaderBlock(title: "Find Large Files", subtitle: MoleTool.analyze.subtitle)
 
                 HStack {
-                    TextField("Path to scan", text: $model.analyzePath)
+                    TextField("Folder to scan", text: $model.analyzePath)
                         .textFieldStyle(.roundedBorder)
                     Button {
                         Task { await model.scanAnalyze() }
@@ -245,7 +245,7 @@ struct ConsoleView: View {
 
     var body: some View {
         ScrollView {
-            Text(text.isEmpty ? "Command output will appear here." : text)
+            Text(text.isEmpty ? "Details will appear here." : text)
                 .font(.system(.callout, design: .monospaced))
                 .foregroundStyle(text.isEmpty ? .secondary : .primary)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -271,7 +271,7 @@ struct RawOutputDisclosure: View {
                 .frame(height: 260)
                 .padding(.top, 10)
         } label: {
-            Label("Raw command output", systemImage: "terminal")
+            Label("Details for advanced users", systemImage: "terminal")
                 .font(.headline)
         }
         .padding(14)
