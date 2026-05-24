@@ -49,7 +49,7 @@ function syncLinks() {
       });
     } else if (downloadNote) {
       downloadLink.setAttribute("download", "Eagle-preview.dmg");
-      downloadNote.textContent = "Open the DMG, drag Eagle to Applications, then right-click Open the first time. This preview is unsigned because I do not have a paid Apple Developer ID yet.";
+      downloadNote.textContent = "Unsigned preview: I do not have a paid Apple Developer ID yet. Open the DMG, drag Eagle to Applications, open Eagle once, click Done if macOS blocks it, then go to System Settings > Privacy & Security > Open Anyway.";
     }
   });
 }
