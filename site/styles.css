@@ -16,7 +16,7 @@
   --radius: 8px;
   --max: 1160px;
   --hero-shot-width: 820px;
-  --hero-shot-height: 575px;
+  --hero-shot-height: 572px;
   --hero-shot-top: 0px;
   --hero-shot-shift: 0px;
   --product-shot-width: 320px;
@@ -220,7 +220,7 @@ a {
   z-index: 2;
   width: 100%;
   height: auto;
-  aspect-ratio: 2200 / 1544;
+  aspect-ratio: 2168 / 1512;
   border: 1px solid rgba(30,36,33,.16);
   border-radius: var(--radius);
   overflow: hidden;
