@@ -8,7 +8,7 @@
   <meta property="og:title" content="Eagle · Clean up your Mac safely">
   <meta property="og:description" content="Find junk, review the plan, and clean only what you approve. Free to download and runs on your Mac.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#f6f2e8">
+  <meta name="theme-color" content="#f8f5ee">
   <link rel="icon" type="image/png" href="./assets/eagle-icon.png?v=2">
   <link rel="apple-touch-icon" href="./assets/eagle-icon.png?v=2">
   <link rel="stylesheet" href="./styles.css">
@@ -22,103 +22,119 @@
       <span>Eagle</span>
     </a>
     <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#how">How it works</a>
       <a href="#tools">Tools</a>
       <a href="#safety">Safety</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <div class="nav-actions">
-      <a class="button small" href="/downloads/Eagle-preview.dmg" download="Eagle-preview.dmg" data-download-link>Download</a>
-    </div>
+    <a class="button small" href="/downloads/Eagle-preview.dmg" download="Eagle-preview.dmg" data-download-link>Download</a>
   </header>
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-content">
-        <p class="eyebrow">Free Mac app · direct download · runs on your Mac</p>
+      <div class="hero-copy-block">
+        <p class="eyebrow">Free Mac app · runs on your Mac · asks before deleting</p>
         <h1 id="hero-title">Clean up your Mac without guessing what is safe to delete.</h1>
-        <p class="hero-copy">Eagle finds caches, old installers, app leftovers, and large folders. You see the plan first, then choose what to clean.</p>
+        <p class="hero-copy">Eagle finds caches, old installers, app leftovers, build clutter, and large folders. You see the plan first, then choose what to clean.</p>
         <div class="hero-actions" id="download">
           <a class="button primary" href="/downloads/Eagle-preview.dmg" download="Eagle-preview.dmg" data-download-link>Download for Mac</a>
           <a class="chai-button" href="https://buymeachai.ezee.li/nareshsilla" target="_blank" rel="noopener noreferrer" data-support-link hidden><img src="https://buymeachai.ezee.li/assets/images/buymeachai-button.png" alt="Buy Me A Chai" width="200"></a>
         </div>
-        <p class="download-note" data-download-note>Unsigned preview: I do not have a paid Apple Developer ID yet. Open the DMG, drag Eagle to Applications, open Eagle once, click Done if macOS blocks it, then go to System Settings &gt; Privacy &amp; Security &gt; Open Anyway.</p>
-        <dl class="trust-stats" aria-label="Product highlights">
-          <div><dt>0</dt><dd>forced payments</dd></div>
-          <div><dt>7</dt><dd>cleanup tools</dd></div>
-          <div><dt>100%</dt><dd>asks before deleting</dd></div>
-        </dl>
+        <div class="install-strip">
+          <p class="download-note" data-download-note>Unsigned preview: I do not have a paid Apple Developer ID yet. Open the DMG, drag Eagle to Applications, open Eagle once, click Done if macOS blocks it, then go to System Settings &gt; Privacy &amp; Security &gt; Open Anyway.</p>
+        </div>
       </div>
 
-      <div class="hero-scene" aria-hidden="true">
-        <div class="scene-grid"></div>
-        <div class="scan-beam"></div>
+      <div class="hero-visual">
         <div class="hero-shot" data-box-target="hero">
-          <img src="./assets/app-dashboard.png" alt="" loading="eager">
+          <img src="./assets/app-dashboard.png" alt="Eagle dashboard showing a simple cleanup scan and cleanup tools" loading="eager">
         </div>
       </div>
     </section>
 
-    <section class="section flow" aria-labelledby="flow-title">
-      <div class="section-kicker">How it works</div>
-      <h2 id="flow-title">Simple cleanup in three steps.</h2>
-      <div class="flow-steps">
+    <section class="proof-band" aria-label="Eagle highlights">
+      <div><strong>0</strong><span>forced payments</span></div>
+      <div><strong>7</strong><span>cleanup tools</span></div>
+      <div><strong>100%</strong><span>asks before deleting</span></div>
+    </section>
+
+    <section class="section how" id="how" aria-labelledby="how-title">
+      <div class="section-heading">
+        <p class="eyebrow">How it works</p>
+        <h2 id="how-title">Scan first. Decide second. Clean last.</h2>
+      </div>
+      <div class="steps">
         <article>
-          <span class="step-num">01</span>
+          <span>01</span>
           <h3>Scan your Mac</h3>
-          <p>Eagle looks for common clutter like caches, logs, old installers, project files, and large folders.</p>
+          <p>Eagle checks common places where clutter builds up, including caches, logs, installers, project folders, and large files.</p>
         </article>
         <article>
-          <span class="step-num">02</span>
-          <h3>Choose what to clean</h3>
-          <p>Safe everyday cleanup is suggested. Bigger choices, like project folders and installers, stay optional until you select them.</p>
+          <span>02</span>
+          <h3>Review the plan</h3>
+          <p>Suggested cleanup is checked for you. Bigger choices stay optional until you select them yourself.</p>
         </article>
         <article>
-          <span class="step-num">03</span>
-          <h3>See what happened</h3>
-          <p>Eagle asks before deleting anything and saves a simple history entry after each cleanup.</p>
+          <span>03</span>
+          <h3>Clean with approval</h3>
+          <p>Nothing is deleted from a scan alone. Eagle waits until you confirm what should run.</p>
         </article>
       </div>
     </section>
 
     <section class="section tools" id="tools" aria-labelledby="tools-title">
-      <div class="capability-intro">
+      <div class="tools-layout">
         <div class="tour-shell sidebar-shell" data-box-target="sidebar">
-          <img class="app-screenshot" src="./assets/app-sidebar.png" alt="Eagle native macOS app sidebar with local tools" loading="lazy">
+          <img class="app-screenshot" src="./assets/app-sidebar.png" alt="Eagle sidebar with cleanup tools" loading="lazy">
         </div>
-        <div class="capability-copy">
-          <div class="section-kicker">Capabilities</div>
-          <h2 id="tools-title">Seven cleanup tools in one place.</h2>
-          <p>Start with the simple scan, or open a single tool when you want more control.</p>
+        <div>
+          <p class="eyebrow">What it cleans</p>
+          <h2 id="tools-title">One simple scan, plus tools when you want control.</h2>
+          <p class="section-lede">Start with Simple cleanup, or open a specific tool for one job. Either way, Eagle shows what it found before it changes anything.</p>
         </div>
       </div>
+
       <div class="tool-grid">
-        <article><span class="icon clean"></span><h3>Clean</h3><p>Remove everyday junk such as caches, logs, temporary files, browser clutter, and build leftovers.</p></article>
-        <article><span class="icon uninstall"></span><h3>Uninstall</h3><p>Remove an app and the extra files it leaves behind, with review before anything is deleted.</p></article>
-        <article><span class="icon optimize"></span><h3>Optimize</h3><p>Run basic Mac maintenance such as refreshing DNS, logs, indexes, and system services.</p></article>
-        <article><span class="icon analyze"></span><h3>Analyze</h3><p>Find large folders and files so you can understand where your storage is going.</p></article>
-        <article><span class="icon status"></span><h3>Status</h3><p>Check memory, CPU, disk, battery, uptime, and overall Mac health in one view.</p></article>
-        <article><span class="icon purge"></span><h3>Project Cleanup</h3><p>Clean build folders and dependency caches inside development projects when you choose to.</p></article>
-        <article><span class="icon installer"></span><h3>Installer Cleanup</h3><p>Find old DMGs, PKGs, ZIPs, and duplicate installer downloads before deleting them.</p></article>
+        <article><span>Clean</span><p>Caches, logs, temporary files, browser clutter, and build leftovers.</p></article>
+        <article><span>Uninstall</span><p>Apps and the extra files they leave behind.</p></article>
+        <article><span>Optimize</span><p>Basic Mac maintenance such as DNS, logs, indexes, and service refreshes.</p></article>
+        <article><span>Analyze</span><p>Large folders and files so you can see where storage is going.</p></article>
+        <article><span>Status</span><p>Memory, CPU, disk, battery, uptime, and overall Mac health.</p></article>
+        <article><span>Project Cleanup</span><p>Build folders and dependency caches inside development projects.</p></article>
+        <article><span>Installer Cleanup</span><p>Old DMGs, PKGs, ZIPs, and duplicate installer downloads.</p></article>
       </div>
     </section>
 
     <section class="section safety" id="safety" aria-labelledby="safety-title">
-      <div class="safety-copy">
-        <div class="section-kicker">Safety</div>
-        <h2 id="safety-title">Built to be careful with your files.</h2>
-        <p>Eagle is made for cleanup you can understand. It shows what it found, asks before it deletes, and keeps sensitive areas protected.</p>
+      <div class="section-heading">
+        <p class="eyebrow">Safety</p>
+        <h2 id="safety-title">Made for cleanup you can understand.</h2>
+        <p class="section-lede">Eagle is designed to be useful without being sneaky. It keeps sensitive places protected and keeps the decision in your hands.</p>
       </div>
-      <div class="principles">
-        <article><span>01</span><h3>Runs on your Mac</h3><p>Eagle does not upload your documents, file names, browser history, or cleanup list.</p></article>
-        <article><span>02</span><h3>Shows before deleting</h3><p>A scan only reports what Eagle found. Cleanup starts only after you confirm.</p></article>
-        <article><span>03</span><h3>Skips sensitive places</h3><p>System folders, passwords, iCloud data, keychains, messages, and protected app data are left alone.</p></article>
-        <article><span>04</span><h3>Keeps a history</h3><p>After cleanup, Eagle saves what ran and whether anything failed, so you can check later.</p></article>
+      <div class="safety-grid">
+        <article><strong>Runs on your Mac</strong><p>Eagle does not upload your documents, file names, browser history, or cleanup list.</p></article>
+        <article><strong>Shows before deleting</strong><p>A scan only reports what Eagle found. Cleanup starts only after you confirm.</p></article>
+        <article><strong>Skips sensitive places</strong><p>System folders, passwords, iCloud data, keychains, messages, and protected app data are left alone.</p></article>
+        <article><strong>Keeps a history</strong><p>After cleanup, Eagle saves what ran and whether anything failed, so you can check later.</p></article>
       </div>
+    </section>
+
+    <section class="section install" aria-labelledby="install-title">
+      <div>
+        <p class="eyebrow">Install note</p>
+        <h2 id="install-title">Unsigned for now, still usable today.</h2>
+      </div>
+      <ol>
+        <li>Open the downloaded DMG. If your browser gives you a ZIP first, unzip it.</li>
+        <li>Drag Eagle.app into Applications.</li>
+        <li>Open Eagle from Applications. If macOS blocks it, click Done.</li>
+        <li>Open System Settings, Privacy &amp; Security, then choose Open Anyway for Eagle.</li>
+      </ol>
     </section>
 
     <section class="section attribution" aria-labelledby="oss-title">
       <div>
-        <div class="section-kicker">Open source base</div>
+        <p class="eyebrow">Open source base</p>
         <h2 id="oss-title">Powered by trusted cleanup work.</h2>
       </div>
       <p>Eagle uses the open-source Mole cleanup project by Tw93 and contributors under the MIT license. Attribution and license details are included with the app.</p>
@@ -126,16 +142,12 @@
     </section>
 
     <section class="section faq" id="faq" aria-labelledby="faq-title">
-      <div class="section-kicker">Questions</div>
-      <h2 id="faq-title">Straight answers, no tiny print.</h2>
+      <p class="eyebrow">Questions</p>
+      <h2 id="faq-title">Straight answers.</h2>
       <div class="faq-list">
         <details open>
           <summary>Is Eagle free?</summary>
           <p>Yes. Eagle is free to download and use. Support is optional and does not unlock or block any feature.</p>
-        </details>
-        <details>
-          <summary>How do I install it?</summary>
-          <p>If your browser downloads a ZIP, unzip it first. Open the DMG, drag Eagle.app to Applications, then open it from Applications. If macOS shows Move to Bin and Done, click Done, open System Settings &gt; Privacy &amp; Security, choose Open Anyway for Eagle, then open Eagle again.</p>
         </details>
         <details>
           <summary>Do I need to know the command line?</summary>
