@@ -1,0 +1,90 @@
+:root {
+  color-scheme: light;
+  --color-paper: oklch(97.6% 0.012 84);
+  --color-paper-soft: oklch(95.4% 0.014 84);
+  --color-surface: oklch(99.1% 0.008 84);
+  --color-surface-raised: oklch(98.2% 0.01 84);
+  --color-footer: oklch(93.3% 0.013 84);
+  --color-ink: oklch(18% 0.014 155);
+  --color-copy: oklch(36% 0.018 155);
+  --color-muted: oklch(49% 0.014 155);
+  --color-note: oklch(45% 0.014 155);
+  --color-rule: oklch(18% 0.014 155 / 0.13);
+  --color-rule-strong: oklch(18% 0.014 155 / 0.16);
+  --color-grid-rule: oklch(18% 0.014 155 / 0.06);
+  --color-nav-bg: oklch(97.6% 0.012 84 / 0.82);
+  --color-nav-bg-scrolled: oklch(99.1% 0.008 84 / 0.92);
+  --color-hero-left: oklch(99.1% 0.008 84 / 0.96);
+  --color-hero-mid: oklch(95.4% 0.014 84 / 0.86);
+  --color-hero-right: oklch(95.2% 0.025 226 / 0.86);
+  --color-glass: oklch(99.1% 0.008 84 / 0.72);
+  --color-glass-strong: oklch(99.1% 0.008 84 / 0.92);
+  --color-inset: oklch(99% 0.004 84 / 0.9);
+  --color-primary: oklch(25% 0.046 158);
+  --color-primary-border: oklch(18% 0.014 155 / 0.86);
+  --color-primary-shadow: oklch(25% 0.046 158 / 0.22);
+  --color-accent: oklch(48% 0.12 152);
+  --color-accent-soft: oklch(93% 0.031 152);
+  --color-link: oklch(35% 0.087 249);
+  --color-action: oklch(62% 0.21 38);
+  --color-action-strong: oklch(62% 0.21 38 / 0.95);
+  --color-box-paper: oklch(98.6% 0.02 84);
+  --color-box-ink: oklch(18% 0.012 155);
+  --color-box-muted: oklch(31% 0.017 155);
+  --color-box-border: oklch(18% 0.012 155 / 0.18);
+  --color-box-border-strong: oklch(18% 0.012 155 / 0.28);
+  --color-box-shadow: oklch(18% 0.012 155 / 0.22);
+  --color-mask: oklch(8% 0.002 84);
+  --color-shadow: oklch(28% 0.012 90 / 0.14);
+  --color-shadow-soft: oklch(28% 0.012 90 / 0.1);
+  --color-brand-shadow: oklch(35% 0.087 249 / 0.16);
+
+  --font-display: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-wordmark: "Fraunces", ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4.5rem;
+  --space-3xl: 7rem;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.375rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.25rem;
+  --text-display: clamp(2.9rem, 4.8vw + 0.5rem, 4.75rem);
+  --text-display-s: clamp(2.5rem, 3.9vw + 0.6rem, 4.25rem);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-short: 160ms;
+  --dur-medium: 240ms;
+
+  --rule-hair: 1px;
+  --radius-card: 8px;
+  --radius-pill: 999px;
+  --radius-input: 8px;
+  --radius: var(--radius-card);
+  --max: 1160px;
+  --shadow: 0 24px 70px var(--color-shadow);
+  --shadow-soft: 0 16px 44px var(--color-shadow-soft);
+
+  --hero-shot-width: 820px;
+  --hero-shot-height: 572px;
+  --hero-shot-top: 0px;
+  --hero-shot-shift: 0px;
+  --product-shot-width: 320px;
+  --product-shot-height: 522px;
+  --product-shot-top: 0px;
+  --product-shot-shift: 0px;
+}

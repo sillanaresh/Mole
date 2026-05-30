@@ -9,8 +9,12 @@
   <meta property="og:description" content="Find junk, review the plan, and clean only what you approve. Free to download and runs on your Mac.">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#f8f5ee">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,650&family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="./assets/eagle-icon.png?v=2">
   <link rel="apple-touch-icon" href="./assets/eagle-icon.png?v=2">
+  <link rel="stylesheet" href="./tokens.css">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
@@ -18,7 +22,7 @@
 
   <header class="topbar" data-nav>
     <a class="brand" href="#" aria-label="Eagle home">
-      <img class="brand-mark" src="./assets/eagle-icon.png?v=2" alt="" aria-hidden="true">
+      <img class="brand-mark" src="./assets/eagle-icon.png?v=2" width="32" height="32" alt="" aria-hidden="true">
       <span>Eagle</span>
     </a>
     <nav class="nav-links" aria-label="Primary navigation">
@@ -34,11 +38,11 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy-block">
         <p class="eyebrow">Free Mac app · runs on your Mac · asks before deleting</p>
-        <h1 id="hero-title">Clean up your Mac without guessing what is safe to delete.</h1>
+        <h1 id="hero-title">Clean your Mac without guesswork.</h1>
         <p class="hero-copy">Eagle finds caches, old installers, app leftovers, build clutter, and large folders. You see the plan first, then choose what to clean.</p>
         <div class="hero-actions" id="download">
           <a class="button primary" href="/downloads/Eagle-preview.dmg" download="Eagle-preview.dmg" data-download-link>Download for Mac</a>
-          <a class="chai-button" href="https://buymeachai.ezee.li/nareshsilla" target="_blank" rel="noopener noreferrer" data-support-link hidden><img src="https://buymeachai.ezee.li/assets/images/buymeachai-button.png" alt="Buy Me A Chai" width="200"></a>
+          <a class="chai-button" href="https://buymeachai.ezee.li/nareshsilla" target="_blank" rel="noopener noreferrer" data-support-link hidden><img src="https://buymeachai.ezee.li/assets/images/buymeachai-button.png" alt="Buy Me A Chai" width="200" height="48"></a>
         </div>
         <div class="install-strip">
           <p class="download-note" data-download-note>Unsigned preview: I do not have a paid Apple Developer ID yet. Open the DMG, drag Eagle to Applications, open Eagle once, click Done if macOS blocks it, then go to System Settings &gt; Privacy &amp; Security &gt; Open Anyway.</p>
@@ -47,7 +51,7 @@
 
       <div class="hero-visual">
         <div class="hero-shot" data-box-target="hero">
-          <img src="./assets/app-dashboard.png" alt="Eagle dashboard showing a simple cleanup scan and cleanup tools" loading="eager">
+          <img src="./assets/app-dashboard.png" width="2168" height="1512" alt="Eagle dashboard showing a simple cleanup scan and cleanup tools" loading="eager">
         </div>
       </div>
     </section>
@@ -85,7 +89,7 @@
     <section class="section tools" id="tools" aria-labelledby="tools-title">
       <div class="tools-layout">
         <div class="tour-shell sidebar-shell" data-box-target="sidebar">
-          <img class="app-screenshot" src="./assets/app-sidebar.png" alt="Eagle sidebar with cleanup tools" loading="lazy">
+          <img class="app-screenshot" src="./assets/app-sidebar.png" width="546" height="798" alt="Eagle sidebar with cleanup tools" loading="lazy">
         </div>
         <div>
           <p class="eyebrow">What it cleans</p>
@@ -162,13 +166,7 @@
   </main>
 
   <footer class="footer">
-    <div>
-      <a class="brand" href="#" aria-label="Eagle home">
-        <img class="brand-mark" src="./assets/eagle-icon.png?v=2" alt="" aria-hidden="true">
-        <span>Eagle</span>
-      </a>
-      <p>Eagle helps you clean up your Mac without guessing what is safe to delete.</p>
-    </div>
+    <p><strong>Eagle</strong> helps you clean up your Mac without guessing what is safe to delete.</p>
     <div class="footer-links">
       <a href="#tools">Tools</a>
       <a href="#safety">Safety</a>
