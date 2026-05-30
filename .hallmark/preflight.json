@@ -2,7 +2,7 @@
   "scannedAt": "2026-05-29",
   "scope": "site",
   "framework": "vanilla HTML",
-  "fontStack": "Geist body/display plus Fraunces wordmark, loaded from site/index.html",
+  "fontStack": "JetBrains Mono throughout for the Terminal trial, loaded from site/index.html",
   "palette": "OKLCH CSS custom properties in site/tokens.css",
   "motion": "motion-cut, no motion library detected",
   "spacing": "CSS clamp values and local custom properties",

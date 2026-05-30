@@ -8,10 +8,10 @@
   <meta property="og:title" content="Eagle · Clean up your Mac safely">
   <meta property="og:description" content="Find junk, review the plan, and clean only what you approve. Free to download and runs on your Mac.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#f8f5ee">
+  <meta name="theme-color" content="#101413">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,650&family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="./assets/eagle-icon.png?v=2">
   <link rel="apple-touch-icon" href="./assets/eagle-icon.png?v=2">
   <link rel="stylesheet" href="./tokens.css">
@@ -20,18 +20,22 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="topbar" data-nav>
-    <a class="brand" href="#" aria-label="Eagle home">
-      <img class="brand-mark" src="./assets/eagle-icon.png?v=2" width="32" height="32" alt="" aria-hidden="true">
-      <span>Eagle</span>
-    </a>
-    <nav class="nav-links" aria-label="Primary navigation">
-      <a href="#how">How it works</a>
-      <a href="#tools">Tools</a>
-      <a href="#safety">Safety</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <a class="button small" href="/downloads/Eagle-preview.dmg" download="Eagle-preview.dmg" data-download-link>Download</a>
+  <header class="topbar terminal-nav" data-nav>
+    <div class="terminal-line">
+      <span class="prompt" aria-hidden="true">&gt;</span>
+      <a class="brand" href="#" aria-label="Eagle home">
+        <img class="brand-mark" src="./assets/eagle-icon.png?v=2" width="32" height="32" alt="" aria-hidden="true">
+        <span>eagle</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#how">--how</a>
+        <a href="#tools">--tools</a>
+        <a href="#safety">--safety</a>
+        <a href="#faq">--faq</a>
+      </nav>
+      <a class="button small" href="/downloads/Eagle-preview.dmg" download="Eagle-preview.dmg" data-download-link>--download</a>
+      <span class="caret" aria-hidden="true">▮</span>
+    </div>
   </header>
 
   <main id="main">
@@ -166,7 +170,7 @@
   </main>
 
   <footer class="footer">
-    <p><strong>Eagle</strong> helps you clean up your Mac without guessing what is safe to delete.</p>
+    <p><strong>eagle-site</strong> / local Mac cleanup app / MIT-licensed Mole base / unsigned preview / download runs from this site / support optional via Buy Me A Chai.</p>
     <div class="footer-links">
       <a href="#tools">Tools</a>
       <a href="#safety">Safety</a>

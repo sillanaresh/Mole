@@ -1,5 +1,15 @@
 [
   {
+    "date": "2026-05-30",
+    "macrostructure": "Workbench",
+    "theme": "Terminal",
+    "enrichment": "real product screenshots",
+    "nav": "N8 Terminal command",
+    "footer": "Ft4 Dense typographic",
+    "scope": "single-page",
+    "brief": "Try Terminal theme for Eagle website"
+  },
+  {
     "date": "2026-05-29",
     "macrostructure": "Workbench",
     "theme": "Quiet",
